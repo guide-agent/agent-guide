@@ -4,8 +4,13 @@ import { appName } from './shared';
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      // JSX supported
       title: appName,
     },
+    links: [
+      {
+        text: '文档',
+        url: '/docs',
+      },
+    ],
   };
 }
