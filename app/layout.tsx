@@ -4,6 +4,9 @@ import './global.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  icons: {
+    icon: '/logo.svg',
+  },
   title: {
     default: 'Agent 面试指南',
     template: '%s | Agent 面试指南',

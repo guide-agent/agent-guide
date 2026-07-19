@@ -62,5 +62,6 @@ npm start
 | `app/docs` | Fumadocs 文档路由和布局 |
 | `app/api/search` | 构建期导出的 Orama 搜索索引 |
 | `components/search.tsx` | 浏览器端中文搜索客户端 |
+| `public/logo.svg` | 导航栏与浏览器站点图标 |
 | `lib/source.ts` | Fumadocs 内容源适配 |
 | `next.config.mjs` | Next.js 静态导出配置 |
