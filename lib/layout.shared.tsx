@@ -14,7 +14,23 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       {
-        text: '文档',
+        text: 'Agent 八股',
+        url: '/docs',
+      },
+      {
+        text: '通用 Agent 设计',
+        url: '/docs',
+      },
+      {
+        text: '框架 | 中间件',
+        url: '/docs',
+      },
+      {
+        text: '项目',
+        url: '/docs',
+      },
+      {
+        text: '工程基础',
         url: '/docs',
       },
     ],
