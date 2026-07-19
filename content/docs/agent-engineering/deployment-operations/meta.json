@@ -1,0 +1,10 @@
+{
+  "title": "部署与运维",
+  "pages": [
+    "deployment-architecture",
+    "configuration-secrets",
+    "canary-release",
+    "capacity-planning"
+  ]
+}
+

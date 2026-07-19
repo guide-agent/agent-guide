@@ -1,0 +1,11 @@
+{
+  "title": "AI Coding 方法论",
+  "pages": [
+    "task-decomposition",
+    "context-management",
+    "plan-code-test-loop",
+    "code-review",
+    "multi-agent-collaboration"
+  ]
+}
+

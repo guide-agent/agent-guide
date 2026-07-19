@@ -1,0 +1,10 @@
+{
+  "title": "可观测性与调试",
+  "pages": [
+    "trace",
+    "logs-execution-history",
+    "token-cost-metrics",
+    "troubleshooting"
+  ]
+}
+

@@ -1,0 +1,11 @@
+{
+  "title": "AI Coding",
+  "root": true,
+  "pages": [
+    "index",
+    "ai-coding-methodology",
+    "coding-agent-principles",
+    "tool-practice",
+    "source-analysis"
+  ]
+}

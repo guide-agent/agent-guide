@@ -1,4 +1,11 @@
 {
   "title": "Agent 面试指南",
-  "pages": ["index", "guide", "agent-basics"]
+  "pages": [
+    "agent-general",
+    "agent-architecture",
+    "agent-development",
+    "agent-engineering",
+    "project-practice",
+    "ai-coding"
+  ]
 }

@@ -1,0 +1,10 @@
+{
+  "title": "Agent 架构与模式",
+  "root": true,
+  "pages": [
+    "index",
+    "agent-architecture",
+    "reasoning-execution-patterns",
+    "orchestration-collaboration-patterns"
+  ]
+}

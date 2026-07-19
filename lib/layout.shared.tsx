@@ -14,24 +14,34 @@ export function baseOptions(): BaseLayoutProps {
     },
     links: [
       {
-        text: 'Agent 八股',
-        url: '/docs',
+        text: 'Agent 通识',
+        url: '/docs/agent-general',
+        active: 'nested-url',
       },
       {
-        text: '通用 Agent 设计',
-        url: '/docs',
+        text: 'Agent 架构与模式',
+        url: '/docs/agent-architecture',
+        active: 'nested-url',
       },
       {
-        text: '框架 | 中间件',
-        url: '/docs',
+        text: 'Agent 开发',
+        url: '/docs/agent-development',
+        active: 'nested-url',
       },
       {
-        text: '项目',
-        url: '/docs',
+        text: 'Agent 工程',
+        url: '/docs/agent-engineering',
+        active: 'nested-url',
       },
       {
-        text: '工程基础',
-        url: '/docs',
+        text: '项目实战',
+        url: '/docs/project-practice',
+        active: 'nested-url',
+      },
+      {
+        text: 'AI Coding',
+        url: '/docs/ai-coding',
+        active: 'nested-url',
       },
     ],
   };

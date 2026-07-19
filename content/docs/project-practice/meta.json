@@ -1,0 +1,11 @@
+{
+  "title": "项目实战",
+  "root": true,
+  "pages": [
+    "index",
+    "agent-system-design",
+    "end-to-end-projects",
+    "project-retrospectives",
+    "interview-project-communication"
+  ]
+}

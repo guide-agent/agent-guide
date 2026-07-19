@@ -1,4 +1,6 @@
 import { Provider } from '@/components/provider';
+import { baseOptions } from '@/lib/layout.shared';
+import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import type { Metadata } from 'next';
 import './global.css';
 
@@ -18,7 +20,9 @@ export default function Layout({ children }: LayoutProps<'/'>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
-        <Provider>{children}</Provider>
+        <Provider>
+          <HomeLayout {...baseOptions()}>{children}</HomeLayout>
+        </Provider>
       </body>
     </html>
   );
