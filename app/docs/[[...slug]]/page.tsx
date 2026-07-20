@@ -1,4 +1,5 @@
 import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
+import { getGiscusConfig } from '@/lib/giscus';
 import {
   DocsBody,
   DocsDescription,
@@ -11,6 +12,7 @@ import { notFound } from 'next/navigation';
 import { getMDXComponents } from '@/components/mdx';
 import type { Metadata } from 'next';
 import { createRelativeLink } from 'fumadocs-ui/mdx';
+import { GiscusComments } from '@/components/giscus-comments';
 
 export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const params = await props.params;
@@ -21,6 +23,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const markdownUrl = getPageMarkdownUrl(page).url;
   const processedText = await page.data.getText('processed');
   const hasContent = processedText.trim().length > 0;
+  const giscusConfig = getGiscusConfig();
 
   return (
     <DocsPage
@@ -48,6 +51,7 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
               })}
             />
           </DocsBody>
+          <GiscusComments config={giscusConfig} />
         </>
       ) : null}
     </DocsPage>
