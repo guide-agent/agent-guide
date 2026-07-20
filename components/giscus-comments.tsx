@@ -6,9 +6,10 @@ import type { GiscusConfig } from '@/lib/giscus';
 
 interface GiscusCommentsProps {
   config: GiscusConfig;
+  discussionTerm: string;
 }
 
-export function GiscusComments({ config }: GiscusCommentsProps) {
+export function GiscusComments({ config, discussionTerm }: GiscusCommentsProps) {
   const discussionsUrl = `https://github.com/${config.repo}/discussions`;
 
   return (
@@ -53,8 +54,9 @@ export function GiscusComments({ config }: GiscusCommentsProps) {
         repoId={config.repoId}
         category={config.category}
         categoryId={config.categoryId}
-        mapping="pathname"
-        strict="0"
+        mapping="specific"
+        term={discussionTerm}
+        strict="1"
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="bottom"

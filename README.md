@@ -40,7 +40,7 @@ NEXT_PUBLIC_GISCUS_CATEGORY=Announcements
 NEXT_PUBLIC_GISCUS_CATEGORY_ID=DIC_kwDOTeJAfM4DBlaP
 ```
 
-每篇文档使用浏览器 `pathname` 映射到一个 Discussion。页面路径变更时，如需保留原评论，应同步修改对应 Discussion 标题或保持旧路径。
+每篇文档使用自身不含前导斜杠的 `/docs/...` 路径作为严格匹配词，对应一个独立 Discussion。显式匹配词会在客户端切换文章时同步更新评论区，并兼容 giscus 原 `pathname` 映射创建的 Discussion。页面路径变更时，如需保留原评论，应同步修改对应 Discussion 标题或保持旧路径。
 
 ## 新增内容
 

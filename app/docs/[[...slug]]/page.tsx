@@ -24,6 +24,8 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
   const processedText = await page.data.getText('processed');
   const hasContent = processedText.trim().length > 0;
   const giscusConfig = getGiscusConfig();
+  // 去掉前导斜杠，与 giscus 原 pathname 映射生成的 Discussion 标题保持兼容。
+  const discussionTerm = page.url.replace(/^\/+/, '');
 
   return (
     <DocsPage
@@ -51,7 +53,10 @@ export default async function Page(props: PageProps<'/docs/[[...slug]]'>) {
               })}
             />
           </DocsBody>
-          <GiscusComments config={giscusConfig} />
+          <GiscusComments
+            config={giscusConfig}
+            discussionTerm={discussionTerm}
+          />
         </>
       ) : null}
     </DocsPage>
