@@ -7,22 +7,22 @@
 - Fumadocs：Markdown/MDX、目录、文档布局与组件。
 - Next.js 16：路由与静态导出，开发和构建默认使用 Turbopack。
 - Orama：构建期生成索引，浏览器端完成中文全文搜索。
-- mise：锁定 Node.js 24.18.0。
+- mise：锁定 Node.js 24.18.0 与 pnpm 11.15.1。
 
-`npm run build` 会将完整静态站点生成到 `out/`，部署时不需要 Node.js 服务。
+`pnpm build` 会将完整静态站点生成到 `out/`，部署时不需要 Node.js 服务。
 
 正式部署前通过 `NEXT_PUBLIC_SITE_URL` 设置站点公开地址，以便生成正确的 Open Graph 绝对链接：
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://docs.example.com npm run build
+NEXT_PUBLIC_SITE_URL=https://docs.example.com pnpm build
 ```
 
 ## 本地开发
 
 ```bash
 mise install
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 浏览器访问 <http://localhost:3000>。
@@ -58,15 +58,15 @@ description: 一句话说明页面内容。
 ## 本地验证
 
 ```bash
-npm run lint
-npm run types:check
-npm run build
+pnpm lint
+pnpm types:check
+pnpm build
 ```
 
 构建成功后可本地预览静态产物：
 
 ```bash
-npm start
+pnpm start
 ```
 
 ## 目录说明
