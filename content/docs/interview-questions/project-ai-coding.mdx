@@ -1,0 +1,34 @@
+---
+title: 项目与 AI Coding
+description: Agent 项目表达、系统设计与 AI Coding 高频面试题。
+---
+
+## 1. 如何在面试中介绍一个 Agent 项目？
+
+按“业务问题、约束、方案、个人决策、量化结果、复盘”组织答案。不要只列模型、框架和向量数据库；重点说明你解决了什么难题、比较过哪些方案，以及如何证明最终方案有效。
+
+延伸阅读：[项目介绍](/docs/project-practice/interview-project-communication/project-introduction)和 [简历表达](/docs/project-practice/interview-project-communication/resume-presentation)。
+
+## 2. 如何设计一个生产级 Agent 系统？
+
+先明确用户、任务边界和成功指标，再设计模型、上下文、工具、编排、状态与数据流。工程部分要覆盖评估、可靠性、观测、权限、容量、发布和回滚，而不是只画一条调用链。
+
+延伸阅读：[需求分析](/docs/project-practice/agent-system-design/requirements-analysis)和 [架构设计](/docs/project-practice/agent-system-design/architecture-design)。
+
+## 3. 如何向面试官解释一次失败的技术选型？
+
+说明当时的信息和约束、选择依据、暴露问题的证据、止损动作与后续机制改进。复盘重点是决策过程是否可解释和可校正，不是把失败简单归因于模型能力或外部环境。
+
+延伸阅读：[架构演进](/docs/project-practice/project-retrospectives/architecture-evolution)和 [故障案例](/docs/project-practice/project-retrospectives/incident-cases)。
+
+## 4. AI Coding 任务应该如何拆解？
+
+先建立仓库地图和验收标准，再按可独立验证的行为切分任务。每个子任务要明确输入、修改范围、依赖、验证方式和失败回滚点，避免按文件数量机械拆分。
+
+延伸阅读：[任务拆解](/docs/ai-coding/ai-coding-methodology/task-decomposition)和 [代码库检索](/docs/ai-coding/coding-agent-principles/codebase-retrieval)。
+
+## 5. 如何验证 Coding Agent 生成的修改？
+
+从差异审查开始，依次执行格式检查、静态分析、相关测试、生产构建和关键路径回归。高风险改动还要检查权限、并发、数据迁移与回滚。验证结果必须和原始验收标准对应。
+
+延伸阅读：[计划、编码与测试循环](/docs/ai-coding/ai-coding-methodology/plan-code-test-loop)和 [测试与验证](/docs/ai-coding/coding-agent-principles/testing-validation)。

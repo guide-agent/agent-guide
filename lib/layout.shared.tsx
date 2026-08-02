@@ -43,6 +43,11 @@ export function baseOptions(): BaseLayoutProps {
         url: '/docs/ai-coding',
         active: 'nested-url',
       },
+      {
+        text: '面试题专栏',
+        url: '/docs/interview-questions',
+        active: 'nested-url',
+      },
     ],
   };
 }

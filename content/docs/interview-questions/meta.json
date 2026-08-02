@@ -1,0 +1,12 @@
+{
+  "title": "面试题专栏",
+  "root": true,
+  "pages": [
+    "index",
+    "---核心题库---",
+    "basics",
+    "architecture-development",
+    "engineering-practice",
+    "project-ai-coding"
+  ]
+}

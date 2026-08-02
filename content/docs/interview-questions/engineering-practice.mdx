@@ -1,0 +1,34 @@
+---
+title: 工程实践
+description: Agent 测试、可靠性、观测、性能成本与安全治理高频面试题。
+---
+
+## 1. 如何评估 Agent 的效果？
+
+先把业务目标拆成可观察指标，再组合离线数据集、规则检查、模型评审和人工抽检。除了最终答案质量，还要评估任务完成率、工具调用正确率、步骤成本、延迟、稳定性和失败恢复能力。
+
+延伸阅读：[离线评估](/docs/agent-engineering/evaluation-testing/offline-evaluation)和 [在线评估](/docs/agent-engineering/evaluation-testing/online-evaluation)。
+
+## 2. 如何测试具有非确定性的 Agent？
+
+测试不应只断言完整文本相等。更稳妥的方式是分层验证结构化契约、关键事实、工具轨迹、约束满足和统计通过率，并固定模型版本、提示词、数据集与采样参数，保证回归结果可解释。
+
+延伸阅读：[单元与集成测试](/docs/agent-engineering/evaluation-testing/unit-integration-testing)和 [回归测试](/docs/agent-engineering/evaluation-testing/regression-testing)。
+
+## 3. 如何防止 Agent 陷入无限循环？
+
+运行时应同时设置最大步骤数、总时限、预算上限和重复行为检测。检测到异常后要保存轨迹、返回明确终止原因，并根据任务风险选择降级结果或人工接管。
+
+延伸阅读：[循环失控检测](/docs/agent-engineering/reliability/loop-runaway-detection)和 [降级与人工接管](/docs/agent-engineering/reliability/fallback-human-takeover)。
+
+## 4. Agent 的延迟和成本如何优化？
+
+先用分阶段指标定位主要成本，再考虑模型路由、上下文裁剪、缓存、并发和工具批处理。优化不能只看 Token 数，还要验证答案质量、首字延迟、总耗时、缓存命中率和失败重试成本。
+
+延伸阅读：[模型路由](/docs/agent-engineering/performance-cost/model-routing)、[缓存](/docs/agent-engineering/performance-cost/caching)和 [Token 优化](/docs/agent-engineering/performance-cost/token-optimization)。
+
+## 5. 如何防御提示词注入？
+
+不能依赖一段“忽略恶意指令”的提示词。系统需要区分指令与数据，限制工具权限和可访问资源，对外部内容标记信任边界，并在高风险操作前执行参数校验和人工确认。
+
+延伸阅读：[提示词注入](/docs/agent-engineering/security-governance/prompt-injection)和 [权限边界](/docs/agent-engineering/security-governance/permission-boundaries)。

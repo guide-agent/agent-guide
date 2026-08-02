@@ -1,0 +1,34 @@
+---
+title: 架构与开发
+description: Agent 架构、工作流编排、状态管理、工具与协议高频面试题。
+---
+
+## 1. 什么时候选择工作流，什么时候选择 Agent？
+
+步骤稳定、规则明确且需要强可控性时，优先使用工作流；路径依赖运行时信息、需要动态选择工具或处理开放问题时，再引入 Agent。回答时要比较确定性、维护成本、失败半径与评估难度。
+
+延伸阅读：[工作流与 Agent](/docs/agent-architecture/agent-architecture/workflow-vs-agent)。
+
+## 2. 单 Agent 和多 Agent 如何选型？
+
+默认先验证单 Agent 是否足够。只有任务可以按能力或上下文边界清晰拆分，并且协作收益高于通信、状态同步和调试成本时，才使用多 Agent。不要把角色名称数量当作架构复杂度的合理性证明。
+
+延伸阅读：[单 Agent 架构](/docs/agent-architecture/agent-architecture/single-agent-architecture)和 [多 Agent 架构](/docs/agent-architecture/agent-architecture/multi-agent-architecture)。
+
+## 3. Agent 工作流如何实现暂停和恢复？
+
+关键是把执行状态持久化为可恢复检查点，并记录下一节点、上下文版本、工具副作用与人工输入要求。恢复时要校验状态是否过期，并避免重复执行已经产生外部影响的步骤。
+
+延伸阅读：[检查点](/docs/agent-development/workflow-state/checkpoint)和 [持久化与恢复](/docs/agent-development/workflow-state/persistence-recovery)。
+
+## 4. 如何设计一个可靠的 Agent 工具？
+
+工具需要单一明确的职责、稳定的输入输出契约和可操作的错误信息。实现时还要处理参数校验、权限边界、超时取消、幂等性、结果大小限制与可观测记录。
+
+延伸阅读：[工具 Schema](/docs/agent-development/tool-development/tool-schema)和 [错误处理](/docs/agent-development/tool-development/error-handling)。
+
+## 5. MCP、A2A 和 AG-UI 分别解决什么问题？
+
+回答重点不是背诵协议，而是区分交互边界：MCP 连接模型应用与上下文、资源及工具；A2A 面向 Agent 之间的任务协作；AG-UI 面向 Agent 与前端之间的事件和状态同步。选型时应结合通信对象、生命周期与互操作要求。
+
+延伸阅读：[MCP](/docs/agent-development/protocols-integration/mcp)、[A2A](/docs/agent-development/protocols-integration/a2a)和 [AG-UI](/docs/agent-development/protocols-integration/ag-ui)。
