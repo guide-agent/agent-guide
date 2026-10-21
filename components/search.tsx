@@ -15,6 +15,7 @@ import { oramaStaticClient } from 'fumadocs-core/search/client/orama-static';
 import { create } from '@orama/orama';
 import { createTokenizer } from '@orama/tokenizers/mandarin';
 import { useI18n } from 'fumadocs-ui/contexts/i18n';
+import { withBasePath } from '@/lib/base-path';
 
 function initOrama() {
   return create({
@@ -30,6 +31,7 @@ export default function DefaultSearchDialog(props: SharedProps) {
   const { locale } = useI18n(); // (optional) for i18n
   const { search, setSearch, query } = useDocsSearch({
     client: oramaStaticClient({
+      from: withBasePath('/api/search'),
       initOrama,
       locale,
     }),

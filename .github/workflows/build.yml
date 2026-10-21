@@ -1,17 +1,23 @@
-name: Build
+name: Deploy GitHub Pages
 
 permissions:
   contents: read
-  issues: write
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -21,8 +27,39 @@ jobs:
         with:
           node-version: '24'
       - name: Install pnpm
-        run: npm install pnpm -g 
+        run: npm install --global "$(node -p "require('./package.json').packageManager")"
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install --frozen-lockfile
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+      - name: Lint
+        run: pnpm lint
+      - name: Check types
+        run: pnpm types:check
+      - name: Test deployment paths
+        run: pnpm test:paths
       - name: Build
         run: pnpm build
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          NEXT_PUBLIC_SITE_URL: ${{ steps.pages.outputs.base_url }}
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: out
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

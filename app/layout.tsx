@@ -2,12 +2,13 @@ import { Provider } from '@/components/provider';
 import { baseOptions } from '@/lib/layout.shared';
 import { HomeLayout } from 'fumadocs-ui/layouts/home';
 import type { Metadata } from 'next';
+import { withBasePath } from '@/lib/base-path';
 import './global.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   icons: {
-    icon: '/logo.svg',
+    icon: withBasePath('/logo.svg'),
   },
   title: {
     default: 'Agent 面试指南',

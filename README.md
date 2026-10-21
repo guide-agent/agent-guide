@@ -17,6 +17,28 @@
 NEXT_PUBLIC_SITE_URL=https://docs.example.com pnpm build
 ```
 
+## GitHub Pages 部署
+
+仓库使用 `.github/workflows/build.yml` 构建并发布静态产物，无需另建 `gh-pages` 分支，也无需配置 PAT。
+
+1. 在仓库 **Settings → Pages → Build and deployment → Source** 中选择 **GitHub Actions**。首次部署前需由有权限的维护者完成此设置。
+2. 将改动合入 `main`；每次推送到 `main` 会执行 lint、类型检查、路径测试、静态构建，并上传 `out/`、部署至 `github-pages` 环境。
+3. 也可在 **Actions → Deploy GitHub Pages → Run workflow** 手动运行。仅 `main` 分支可以发布，其他分支手动运行只构建和上传产物。
+4. 首次部署后，在工作流的部署环境链接中打开站点。未配置自定义域名时，本仓库地址为 <https://guide-agent.github.io/agent-guide/>。
+
+工作流通过 GitHub 官方 `configure-pages` 获取公开地址和子路径，构建时分别注入 `NEXT_PUBLIC_SITE_URL` 和 `NEXT_PUBLIC_BASE_PATH`。Next.js 导航、静态资源、搜索索引和 Markdown 复制链接均支持子路径；页面导出为目录下的 `index.html`，支持直接打开或刷新深层文档链接。giscus 的 Discussion 匹配词仍使用不含部署前缀的文档路径，保持原评论关联。
+
+本地复现项目 Pages 构建：
+
+```bash
+NEXT_PUBLIC_SITE_URL=https://guide-agent.github.io/agent-guide \
+NEXT_PUBLIC_BASE_PATH=/agent-guide pnpm build
+```
+
+此时 `out/` 的内容应挂载在服务器的 `/agent-guide/` 下；`pnpm start` 仅适用于未设置子路径的根目录构建。切回本地开发或根域名部署时，清空 `NEXT_PUBLIC_BASE_PATH` 后重新构建。
+
+无迁移，直接替换。回滚站点时，将已知正常的代码恢复到 `main` 并重新运行部署；停止自动发布可在 Actions 中禁用此工作流。首次启用 Pages 前应确认仓库内容及构建产物适合公开访问。
+
 ## 本地开发
 
 ```bash
@@ -60,6 +82,7 @@ description: 一句话说明页面内容。
 ```bash
 pnpm lint
 pnpm types:check
+pnpm test:paths
 pnpm build
 ```
 
