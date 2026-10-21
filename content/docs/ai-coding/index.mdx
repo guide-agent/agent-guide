@@ -1,3 +1,48 @@
 ---
 title: AI Coding
+description: "AI Coding 的核心是让代码变更形成可核查闭环：理解需求与仓库、定位证据、生成补丁、实际验证并审查差异。"
 ---
+
+AI Coding 的核心是让代码变更形成可核查闭环：理解需求与仓库、定位证据、生成补丁、实际验证并审查差异。本栏目分别讨论方法、原理、工具实践和公开实现。
+
+## 推荐学习路径
+
+先练习小范围修复与验证，再研究上下文、检索和补丁机制，最后阅读具体工具源码。
+
+## 专题导航
+
+### AI Coding 方法论
+
+- [任务拆解](/docs/ai-coding/ai-coding-methodology/task-decomposition)：给 Coding Agent 的任务怎样拆，才容易验收？
+- [上下文管理](/docs/ai-coding/ai-coding-methodology/context-management)：编码任务的上下文应该怎样选择与压缩？
+- [Plan、Code、Test 循环](/docs/ai-coding/ai-coding-methodology/plan-code-test-loop)：Plan、Code、Test 循环中的测试应该何时开始？
+- [代码审查](/docs/ai-coding/ai-coding-methodology/code-review)：AI 生成代码应该怎样审查？
+- [多 Agent 协作](/docs/ai-coding/ai-coding-methodology/multi-agent-collaboration)：多个编码 Agent 如何避免互相覆盖工作？
+
+### Coding Agent 原理
+
+- [代码库检索](/docs/ai-coding/coding-agent-principles/codebase-retrieval)：代码库检索为什么不能只依赖向量相似度？
+- [Repo Map](/docs/ai-coding/coding-agent-principles/repo-map)：Repo Map 有什么价值，又容易遗漏什么？
+- [Patch 生成](/docs/ai-coding/coding-agent-principles/patch-generation)：生成 Patch 比重写整个文件有什么优势？
+- [Terminal 与工具调用](/docs/ai-coding/coding-agent-principles/terminal-tool-use)：终端工具如何把命令建议变成可验证执行？
+- [测试与验证](/docs/ai-coding/coding-agent-principles/testing-validation)：编码 Agent 如何证明改动经过真实验证？
+
+### 工具实践
+
+- [Claude Code](/docs/ai-coding/tool-practice/claude-code)：怎样使用 Claude Code，而不把产品宣传当验收？
+- [Codex](/docs/ai-coding/tool-practice/codex)：使用 Codex 完成仓库任务时，哪些控制不能省略？
+- [其他 Coding Agent](/docs/ai-coding/tool-practice/other-coding-agents)：如何横向比较不同 Coding Agent？
+
+### 源码解析
+
+- [Claude Code（CC）相关实现](/docs/ai-coding/source-analysis/claude-code-implementation)：如何研究 Claude Code 相关实现而不冒充读过核心源码？
+- [Grok Build](/docs/ai-coding/source-analysis/grok-build)：Grok Build 的公开源码可以从哪些边界开始读？
+- [典型开源 Coding Agent](/docs/ai-coding/source-analysis/open-source-coding-agents)：阅读开源 Coding Agent 时，如何沿一条真实调用链分析？
+
+## 自测与使用边界
+
+交付真实差异、运行过的检查与剩余风险；源码观察注明仓库提交和可见范围。
+
+阅读后尝试不看答案回答主问题，再用失败场景追问自己的设计。概念说明、设计建议与运行结果应分开记录。
+
+参考来源、快照日期和版权边界见 [参考资料](/docs/references)；统一写作与验收约定见 [使用说明](/docs/guide)。

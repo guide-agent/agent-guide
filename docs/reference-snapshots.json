@@ -1,0 +1,209 @@
+{
+  "retrieved_at": "2026-10-21",
+  "repositories": [
+    {
+      "repo": "KalyanKS-NLP/LLM-Interview-Questions-and-Answers-Hub",
+      "commit": "280c8b642acd65006b11aad76633826a867f3a63",
+      "stars": 1084,
+      "pushed_at": "2026-02-09T05:37:00Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/KalyanKS-NLP/LLM-Interview-Questions-and-Answers-Hub",
+      "use": "用于确定位置编码、推理、KV Cache、分词和解码的常见考点；不采用未经实测的加速倍数。"
+    },
+    {
+      "repo": "bcefghj/ai-agent-interview-guide",
+      "commit": "9a987322f2d82ddabe4c1aabc7b4795749fa90a2",
+      "stars": 3372,
+      "pushed_at": "2026-04-01T12:38:52Z",
+      "license": "MIT",
+      "url": "https://github.com/bcefghj/ai-agent-interview-guide",
+      "use": "用于梳理 Agent、工具、记忆、多 Agent、工程和项目表达考点。其 Python 项目 README 自称最小骨架，不作为已完成生产系统的证明；不引用模板业绩。"
+    },
+    {
+      "repo": "MisterBooo/llm-interview-questions",
+      "commit": "320048c20288c2d3afb695f97a55e91315c60fdf",
+      "stars": 73,
+      "pushed_at": "2026-07-19T05:16:28Z",
+      "license": "CC-BY-SA-4.0",
+      "url": "https://github.com/MisterBooo/llm-interview-questions",
+      "use": "公开内容以考点摘要和论文入口为主，用于补充评估、微调与推理问题；不假设外链站点完整答案已被阅读，不复制其图解和措辞。"
+    },
+    {
+      "repo": "bregman-arie/devops-exercises",
+      "commit": "9e49ef97f16377d901db01f3562187394828ca6a",
+      "stars": 84913,
+      "pushed_at": "2025-12-27T14:22:30Z",
+      "license": "NOASSERTION",
+      "url": "https://github.com/bregman-arie/devops-exercises",
+      "use": "用于 Kubernetes 基础、资源、调度与排障问题覆盖；新 DRA 行为另外核对 Kubernetes 官方文档。"
+    },
+    {
+      "repo": "NVIDIA/k8s-device-plugin",
+      "commit": "1053da35d5a67fdbc3f0ea0877b7178026048769",
+      "stars": 3904,
+      "pushed_at": "2026-10-20T23:22:29Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/NVIDIA/k8s-device-plugin",
+      "use": "核对扩展资源、MIG 暴露、Time-slicing、MPS 和共享访问的实现边界，不泛化到其他厂商。"
+    },
+    {
+      "repo": "ROCm/k8s-gpu-dra-driver",
+      "commit": "0ac3a6e01623fbdc4f74a87d60616fbcc1c0fa30",
+      "stars": 30,
+      "pushed_at": "2026-10-14T18:56:04Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/ROCm/k8s-gpu-dra-driver",
+      "use": "参考设备发现、属性、Claim 排障与预先分区限制；README 中旧术语与不同 API 版本提示不直接复制成通用规则。"
+    },
+    {
+      "repo": "Project-HAMi/HAMi",
+      "commit": "e601d09fc21b6271e90a5c8f0c59a6f2d9596509",
+      "stars": 4896,
+      "pushed_at": "2026-10-21T02:50:01Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/Project-HAMi/HAMi",
+      "use": "核对 Webhook、调度器、设备插件与设备特定虚拟化组件关系；隔离能力仍按后端验证。"
+    },
+    {
+      "repo": "openai/codex",
+      "commit": "c7234c1174b27d9c55199fba0d546dc27d1b0415",
+      "stars": 130195,
+      "pushed_at": "2026-10-21T02:41:24Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/openai/codex",
+      "use": "静态阅读工具路由和补丁处理器，产品权限行为另查 OpenAI 官方文档；未构建或运行此仓库。"
+    },
+    {
+      "repo": "xai-org/grok-build",
+      "commit": "2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8",
+      "stars": 27477,
+      "pushed_at": "2026-09-29T16:57:13Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/xai-org/grok-build",
+      "use": "阅读仓库结构、权限分类与重试工具源码；未推断所有调用方都使用默认值，未构建或运行。"
+    },
+    {
+      "repo": "anthropics/claude-code",
+      "commit": "d014fc0fa64280540728772fc84063918ed185cc",
+      "stars": 152669,
+      "pushed_at": "2026-10-21T03:16:31Z",
+      "license": null,
+      "url": "https://github.com/anthropics/claude-code",
+      "use": "阅读 README、插件目录说明和许可证；不声称公开仓库包含完整核心运行时或可任意再分发。"
+    },
+    {
+      "repo": "wdndev/llm_interview_note",
+      "stars": 15269,
+      "pushed_at": "2026-06-14T14:57:07Z",
+      "license": null,
+      "url": "https://github.com/wdndev/llm_interview_note",
+      "commit": "581d54dd9a72e1d0a4eb28ae50859db83901b783",
+      "license_note": "未发现根目录明确许可；未复制其正文、代码或图像。",
+      "use": "定向阅读 MHA/MQA/GQA、LoRA/QLoRA 与推理问题，补充注意力头、训练参数和显存考点；不采用梯度裁剪省显存、蒸馏师生大小倒置、温度零保证复现等表述。"
+    },
+    {
+      "repo": "amitshekhariitbhu/ai-engineering-interview-questions",
+      "stars": 3506,
+      "pushed_at": "2026-10-21T02:46:17Z",
+      "license": "Apache-2.0",
+      "url": "https://github.com/amitshekhariitbhu/ai-engineering-interview-questions",
+      "commit": "e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f",
+      "license_note": "Apache-2.0；仓库外链文章的许可不由此推定。",
+      "use": "读取 README 的 LLM、RAG、Agent、生产与评估问题索引，补充切片、重排、缓存、容量和评估追问；很多答案是外链，本轮未阅读外链全文。"
+    },
+    {
+      "repo": "datawhalechina/hello-agents",
+      "stars": 83959,
+      "pushed_at": "2026-10-13T22:28:54Z",
+      "license": "CC-BY-NC-SA-4.0",
+      "url": "https://github.com/datawhalechina/hello-agents",
+      "commit": "36f583c233ea5cee4537ef93455702b55053af18",
+      "license_note": "CC-BY-NC-SA-4.0，依据 LICENSE.txt 与 README；GitHub API 未精确归类。",
+      "use": "定向阅读第四章范式、第八章记忆、第十二章评估，用于考点和学习入口；本站采用独立场景与措辞，不复制或改编其教程、代码、图表和项目演示。"
+    },
+    {
+      "repo": "datawhalechina/llm-universe",
+      "stars": 14175,
+      "pushed_at": "2026-08-27T03:08:26Z",
+      "license": null,
+      "url": "https://github.com/datawhalechina/llm-universe",
+      "commit": "77beb748047e8a0d8ff708716606a8e0b132dc45",
+      "license_note": "未发现根目录明确许可；未复制其正文、代码或图像。",
+      "use": "定向阅读第三章知识库与第五章评估优化，补充解析、切片、检索和生成分层诊断；不采用 eval 模型输出的示例做法，区分问题命中率与证据召回率。"
+    }
+  ],
+  "web_sources": [
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/fundamentals/gpu-basics-hardware-to-kubernetes/",
+      "sha256": "23e255234c95a56799deaa62f64183d6eb7eb136c1492a3edb5e6e27ed05581f",
+      "retrieved_at": "2026-10-21",
+      "title": "GPU 基础认知",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/fundamentals/gpu-memory-management/",
+      "sha256": "5483aa1557d5051e8b8110b037cbb675744b5dc8ab0923769db11ed97a389bd4",
+      "retrieved_at": "2026-10-21",
+      "title": "GPU 显存管理",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/fundamentals/k8s-device-model/",
+      "sha256": "03761243d9277ce550683a6230231571db8e07cf3357552c7b2710729ad47ba7",
+      "retrieved_at": "2026-10-21",
+      "title": "K8s 设备资源模型",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/fundamentals/hard-soft-slicing/",
+      "sha256": "031d713b3628aa0b277377fb364d626ca99a252c50b5728f699c2129741b304b",
+      "retrieved_at": "2026-10-21",
+      "title": "硬切分与软切分",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/software-stack/nvidia-software-stack/",
+      "sha256": "61ae1aa80e6513b13315c50cd050c07545e091ff938a55ad208bbb21c073a0dd",
+      "retrieved_at": "2026-10-21",
+      "title": "NVIDIA 软件栈",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/data-plane/dra/",
+      "sha256": "1fcf94b8292389d49a41f5fc5e314d8957d597685853391ee86eb9ca116a61ae",
+      "retrieved_at": "2026-10-21",
+      "title": "DRA",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/control-plane/control-plane-map/",
+      "sha256": "89f8524a8dfee7a9f116955f6e20eddc5426f1735384808ef77e5085bf9b1369",
+      "retrieved_at": "2026-10-21",
+      "title": "GPU 资源控制面地图",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    },
+    {
+      "url": "https://jimmysong.io/zh/book/ai-infra/observability/gpu-metrics-semantics/",
+      "sha256": "f3089cd41588de42d4fd40e7ba7c99dff28b361aa007a8730f003457f0759a83",
+      "retrieved_at": "2026-10-21",
+      "title": "GPU 指标语义",
+      "author": "Jimmy Song",
+      "license": "CC-BY-4.0 (site footer; third-party content may differ)",
+      "draft": true
+    }
+  ]
+}

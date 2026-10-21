@@ -1,4 +1,38 @@
 ---
 title: Agent Loop
+description: "一个最小但可靠的 Agent Loop 应包括什么？"
 ---
 
+## 面试题：一个最小但可靠的 Agent Loop 应包括什么？
+
+### 30 秒回答
+
+Agent Loop 就是反复做“看当前情况、选下一步、执行、看结果”，直到任务完成或必须停止。模型提出动作，程序负责检查并执行。必须区分真正完成、失败、预算用尽和等待人工，不能循环结束就说成功。
+
+### 用一个例子理解
+
+查配送异常时，先查询物流；发现地址不完整，就向用户确认，而不是一直重复查询。同一个目标下，查询结果决定下一步。如果物流已经签收，也要核对它是否回答了用户的问题，不能只看工具调用成功。
+
+### 关键机制与取舍
+
+- 每轮先检查取消、时间和费用预算，再组装必要上下文，避免工具或子任务绕开总预算。
+- 关联动作 ID 与结果，区分未执行、执行失败和执行结果未知；写操作遇到未知结果先查账。
+- 成功结束要有业务验收证据；同时限制重复动作、无进展次数与最大步数。
+
+### 场景与失败处理
+
+查询工具一直返回空结果，模型重复相同查询。应记录查询和证据增量，达到无进展阈值后澄清或停止，保留已完成部分，不把耗尽轮数包装为成功。
+
+### 常见追问
+
+**一步有多个工具能并行吗？** 仅对无依赖且副作用不冲突的调用并行，仍受同一预算控制。
+
+**最终自然语言回答就是成功证据吗？** 不是，需核对真实工具返回和目标状态。
+
+## 参考资料
+
+- [Hello Agents：经典范式学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%99%BA%E8%83%BD%E4%BD%93%E7%BB%8F%E5%85%B8%E8%8C%83%E5%BC%8F%E6%9E%84%E5%BB%BA.md)
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [Agent 面试题：基础概念](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/01-基础概念.md)
+- [Agent 面试题：工具调用](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/04-工具调用.md)
+- [来源快照、使用边界与验证说明](/docs/references)

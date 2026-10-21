@@ -1,3 +1,54 @@
 ---
 title: Agent 开发
+description: "把概念落成可运行的系统，需要工具契约、状态持久化、协议适配和运行环境。"
 ---
+
+把概念落成可运行的系统，需要工具契约、状态持久化、协议适配和运行环境。模型提出动作，应用负责校验与执行；框架和 SDK 可以减少重复实现，但不替代业务边界。
+
+## 推荐学习路径
+
+从工具输入输出开始，再设计工作流状态和恢复，最后接入协议与隔离环境。
+
+## 专题导航
+
+### SDK 与框架
+
+- [Agent SDK](/docs/agent-development/sdk-frameworks/agent-sdk)：模型 SDK 与 Agent SDK 的边界是什么？
+- [Agent 框架](/docs/agent-development/sdk-frameworks/agent-frameworks)：为什么使用 Agent 框架，又什么时候不需要？
+- [框架能力对比](/docs/agent-development/sdk-frameworks/framework-comparison)：如何做框架选型，避免只列功能对勾？
+
+### 工具开发
+
+- [Tool Schema](/docs/agent-development/tool-development/tool-schema)：怎样的 Tool Schema 更容易被模型正确使用？
+- [工具注册与调用](/docs/agent-development/tool-development/tool-registration-invocation)：工具从注册到返回结果，如何保持一致性？
+- [参数校验](/docs/agent-development/tool-development/parameter-validation)：参数已经符合 Schema，为什么仍要业务校验？
+- [错误处理](/docs/agent-development/tool-development/error-handling)：工具错误怎样返回，才能支持正确恢复？
+
+### 工作流与状态
+
+- [工作流编排](/docs/agent-development/workflow-state/workflow-orchestration)：工作流编排要管理哪些信息，而不只是画一张 DAG？
+- [状态管理](/docs/agent-development/workflow-state/state-management)：为什么不能把所有运行状态都藏在聊天历史里？
+- [Checkpoint](/docs/agent-development/workflow-state/checkpoint)：Checkpoint 应保存什么，不能保证什么？
+- [持久化与恢复](/docs/agent-development/workflow-state/persistence-recovery)：进程崩溃后，如何安全恢复一个未完成任务？
+
+### 协议与集成
+
+- [MCP](/docs/agent-development/protocols-integration/mcp)：MCP 统一了什么，又没有替系统解决什么？
+- [A2A](/docs/agent-development/protocols-integration/a2a)：A2A 与普通调用另一个 Agent 的 HTTP 接口有什么差别？
+- [AG-UI](/docs/agent-development/protocols-integration/ag-ui)：AG-UI 如何帮助前端呈现 Agent 的运行过程？
+- [外部系统集成](/docs/agent-development/protocols-integration/external-system-integration)：Agent 接入企业系统时，最容易漏掉哪些边界？
+
+### 运行环境
+
+- [Sandbox](/docs/agent-development/runtime-environment/sandbox)：Sandbox 与人工批准分别控制什么？
+- [Human-in-the-Loop（HITL）](/docs/agent-development/runtime-environment/human-in-the-loop)：开发层如何实现可恢复、不可误用的人工审批？
+- [权限控制](/docs/agent-development/runtime-environment/access-control)：Agent 的有效权限由谁决定？
+- [长任务与后台执行](/docs/agent-development/runtime-environment/long-running-background-tasks)：长任务如何支持查询、取消与恢复？
+
+## 自测与使用边界
+
+能沿一次工具调用说明身份、参数、执行结果、失败恢复和最终验证。
+
+阅读后尝试不看答案回答主问题，再用失败场景追问自己的设计。概念说明、设计建议与运行结果应分开记录。
+
+参考来源、快照日期和版权边界见 [参考资料](/docs/references)；统一写作与验收约定见 [使用说明](/docs/guide)。

@@ -3,6 +3,18 @@ title: Token 与 Tokenizer
 description: 本篇文章中，将介绍大模型 token。包括 token 是什么，为什么会有 token 以及大模型为什么使用 Token 计费
 ---
 
+## 面试题：Token 是字数吗，Tokenizer 又做什么？
+
+### 30 秒回答
+
+Token 是模型处理文本时使用的小单位，可能是一个字、一个词的一部分、标点或字节片段，不能直接等同于字数。Tokenizer 按模型配套的规则，把文本转换成 token ID，也能把生成的 ID 解码成文本。不同分词器对同一句话可能切得不同。
+
+### 用一个例子理解
+
+把一句话装进积木盒：有的积木对应完整常见词，有的只对应词的一部分。换一套积木，拼同一句话需要的块数可能改变。因此“100 个汉字一定是 100 个 token”不成立，预算应按目标模型实际的分词结果计算。
+
+这个类比只解释切分单位，不代表每个 token 都有完整语义。模型接收 ID 后，还要通过 Embedding 等计算得到向量表示。
+
 ## 从自然语言处理（NLP）理解
 
 ### 分词器
@@ -13,7 +25,7 @@ description: 本篇文章中，将介绍大模型 token。包括 token 是什么
 
 比如说下面的情形：
 
-![Token 1](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/4.png)
+![Token 1](/images/docs/agent-general/llm-basics/model-tokenization/4.png)
 
 可能 “我” 是一个 token，”喜欢” 是一个 token，“，” 是一个 token。诸如此类的像单个汉字，两个汉字组成的短语，标点符号，三个字母组成的单词或者词缀等可能都是一个 token。
 
@@ -25,13 +37,13 @@ description: 本篇文章中，将介绍大模型 token。包括 token 是什么
 
 首先，先看下面一副图片：
 
-![Token 2](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/1.png)
+![Token 2](/images/docs/agent-general/llm-basics/model-tokenization/1.png)
 
 如果现在让你快速念这几个字？`孔子不认识，庄子不认识，老子也不认识`。
 
 如果让这几个字出现在词语里？像下面这样：
 
-![Token 3](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/8.png)
+![Token 3](/images/docs/agent-general/llm-basics/model-tokenization/8.png)
 
 会瞬间清晰很多，一下子就能念出来！
 
@@ -39,29 +51,23 @@ description: 本篇文章中，将介绍大模型 token。包括 token 是什么
 
 而这样做的原因是会节省脑力，在日常生活中，几乎不存在单独出现的情况，所以大脑有意识的规避了一些生僻字。例如下面这个短语：
 
-![Token 4](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/2.png)
+![Token 4](/images/docs/agent-general/llm-basics/model-tokenization/2.png)
 
 如果一个一个字去看，大脑就需要处理 7 个字之间的语义关系，如果按照短语或者词语的方式处理，那么只需要处理 4 个部分之间的语义关系。从而提高效率，节省脑力。
 
 ### 大模型认知
 
-既然人脑可以通过上述行为，节省脑力，提高效率。那么大模型自然也能这么做，所以就有了分词器。
+人脑识词的图片只是帮助理解“可把文本拆成不同大小的块”，不是分词器的技术原理。分词器按算法、词表和规则工作，不会像人一样为了省脑力而忽略生僻字。
 
-专门负责将一段文本，拆分成为一个个大小合适的 token。不同的人在不同的环境中对短语和词语的分组是不同的，比如语言学家和普通上班人之间。语言学家对一个个的生僻字更为敏感，上班族为了处理不同的业务工作。所以大脑有意识的忽略了生僻字的处理。
-
-在大模型中，也有此类情况。根据不同的分词器，将一段相同的文本切分之后的效果也是不同的。
-
-<Callout type="idea"> 因此，在面对不同用途的情形时。文本切分越合理。大模型处理越轻松。 </Callout>
+不同分词器会得到不同切分结果。更短的 token 序列可能减少部分处理成本，但词表大小、训练数据和模型兼容性也有取舍，不能只追求 token 越少越好。
 
 ## 分词器原理
 
-那么分词器到底时如何分词的呢？默认人类大脑学习过程。其中一种方法大概是：
+以 BPE 的直觉为例：训练分词器时，从较小的单位出发，反复合并语料中高频的相邻单位，形成词表和合并规则。实际还会涉及预处理、字节表示和特殊 token；其他分词算法也不完全相同。
 
-在大模型分词器统计了大量文本数据之后，发现 “今天” 两个字经常在一起出现。而 “今” 这个字出现的频率较低。在大模型分词器分词时，会优先把 “今天” 作为一个 token。
+假设某词表收录了“今天”，可以给它分配一个 ID。图中的编号仅作示意，不是所有模型通用的固定编号。推理时使用已经训练好的词表与规则，不会临时重新统计词频训练分词器。
 
-在识别到了 “今天” 这个词语之后，会将 “今天” 打包成为一个 token。并赋予对应的数据编号。比如 “今天” == 19978。将 token 和 编号的关闭保存在一个映射关系表里：类似下面这样。
-
-![Token 5](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/6.png)
+![Token 5](/images/docs/agent-general/llm-basics/model-tokenization/6.png)
 
 当词语再次出现时，大模型便会查找在关系表里查询，在输入和输出时，面对一堆数字编号即可。之后由分词器根据关系表转为人类能看懂的文字和符号。
 
@@ -75,18 +81,35 @@ description: 本篇文章中，将介绍大模型 token。包括 token 是什么
 
 ##### gpt 模型 Token
 
-![Token 7](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/3.png)
+![Token 7](/images/docs/agent-general/llm-basics/model-tokenization/3.png)
 
 ##### deepseek-r1 模型
 
-![Token 7](https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/5.png)
+![Token 7](/images/docs/agent-general/llm-basics/model-tokenization/5.png)
 
 可以看到，不同的模型在面对同一段文本时，切分的 Token 也是不同的。
 
 ## Token 总结
 
-在大模型看来，所有的文字都是一个个 Token，而大模型正是通过计算 Token 之间的关系，来推断初下一个 Token 最有可能是哪一个。
+对于常见的自回归文本生成模型，输入先被编码为 token，模型根据当前上下文给下一个 token 的候选分配分数，再按解码策略选择。不是所有语言模型都使用完全相同的预测目标。
 
 ## 大模型 Token 计费
 
-这也是为什么所有大模型厂商使用 token 计费的原因。token 的数量决定了大模型的计算量。
+Token 是许多文本模型接口的计量单位，但并非所有产品或模态都采用相同计费方式。实际费用可能区分输入、输出、缓存、音频、图像和其他服务项；计算量也受模型架构、序列长度与批处理影响，不能只凭 token 数推导全部成本。
+
+
+## 面试追问与概念校准
+
+**Tokenizer 是在每次请求中重新学习分词吗？** 通常不是。分词规则、词表和特殊 token 由模型配套的 tokenizer 确定，推理时按已有规则编码。词频类比能帮助理解，但 BPE、WordPiece、Unigram 等方法的具体训练与切分机制不同。
+
+**一个汉字等于一个 token 吗？** 没有统一换算。语言、字符、空白、数字和分词器版本都会影响结果；输入预算用目标模型的兼容 tokenizer 或服务实际 usage 核对。
+
+**Token ID 能跨模型直接复用吗？** 不能默认复用。词表、特殊 token 和聊天模板可能不同，同一整数在另一模型中不一定代表相同内容。
+
+**Tokenizer 与 Embedding 有什么关系？** 前者把输入编码成 token ID，后者将 ID 映射为模型可计算的向量表示。检索用的句子 Embedding 又是另一层任务抽象，不要混淆。
+
+延伸阅读：[Transformer](/docs/agent-general/llm-basics/model-tokenization/transformer)、[上下文窗口](/docs/agent-general/llm-basics/prompt-context/context-window)、[成本统计](/docs/agent-engineering/observability-debugging/token-cost-metrics)。来源与日期见 [参考资料](/docs/references)。
+
+## 补充参考
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)

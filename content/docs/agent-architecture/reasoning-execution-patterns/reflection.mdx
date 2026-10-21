@@ -1,4 +1,38 @@
 ---
 title: Reflection
+description: "让模型反思自己的答案，能稳定提高质量吗？"
 ---
 
+## 面试题：让模型反思自己的答案，能稳定提高质量吗？
+
+### 30 秒回答
+
+Reflection 是在初稿后增加一次检查和修订。它有用的前提是检查有依据，例如测试失败、原文证据或明确评分标准。让模型反复说“再想想”不保证变正确，也会增加时间和费用。
+
+### 用一个例子理解
+
+模型写的排序函数在空列表上崩溃，测试报告指出这一点，修订就有了明确目标。若只是让同一个模型评价“代码很好吗”，它可能继续认可原来的错误。修好空列表后，还要确认普通输入没有被改坏。
+
+### 关键机制与取舍
+
+- 把生成与评价输入分开，评价器引用可验证证据，不只给模糊分数。
+- 保留原始候选与评分变化，避免“修复”引入新的事实错误或删除有效内容。
+- 设置迭代上限与接受门槛，成本按完整生成、评价、修订链路统计。
+
+### 场景与失败处理
+
+编码 Agent 自评“没有问题”，但测试暴露空输入崩溃。把失败样例作为反思依据，只修相关边界，再运行原回归集确认没有退化。
+
+### 常见追问
+
+**换一个模型做裁判就独立了吗？** 不一定，训练偏差和输入证据仍可能相同。
+
+**什么时候停止修订？** 满足可验证标准、没有新增改进或预算耗尽时停止，并说明剩余限制。
+
+## 参考资料
+
+- [Hello Agents：经典范式学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%99%BA%E8%83%BD%E4%BD%93%E7%BB%8F%E5%85%B8%E8%8C%83%E5%BC%8F%E6%9E%84%E5%BB%BA.md)
+- [Hello Agents：智能体评估学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter12/%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0%20%E6%99%BA%E8%83%BD%E4%BD%93%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0.md)
+- [评估与监控考点索引](https://github.com/MisterBooo/llm-interview-questions/blob/320048c20288c2d3afb695f97a55e91315c60fdf/modules/evaluation-monitoring.md)
+- [Agent 面试题：工程化实践](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/08-工程化实践.md)
+- [来源快照、使用边界与验证说明](/docs/references)

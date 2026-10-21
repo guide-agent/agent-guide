@@ -1,4 +1,38 @@
 ---
 title: 工具使用（Tool Use）
+description: "模型发出 Tool Call 后，系统应该做哪些检查？"
 ---
 
+## 面试题：模型发出 Tool Call 后，系统应该做哪些检查？
+
+### 30 秒回答
+
+Tool Call 是模型提交的一份“请执行这个动作”的申请，不是已经执行的事实。程序要检查参数、身份、权限和业务条件，调用真实工具后再把结果交回模型。模型负责选择建议，执行权在程序。
+
+### 用一个例子理解
+
+模型输出“查询订单 A 的物流”，程序要先确认 A 属于当前用户，才调用订单服务。若服务超时，应返回“结果未知或查询失败”，不能让模型把“我打算查询”写成“已查到正在配送”。
+
+### 关键机制与取舍
+
+- 读写工具分开，使用最小必要参数；用户身份与租户从可信会话取得，不由模型随意指定。
+- 对参数类型、范围、资源归属和前置状态分别校验，执行前处理需要人工确认的动作。
+- 返回稳定状态、业务结果与可恢复错误，控制结果大小并保留证据入口；不要泄露密钥或完整敏感响应。
+
+### 场景与失败处理
+
+支付工具超时后，模型立即重试可能重复扣款。先用幂等键查询交易状态，区分未提交与结果未知，再决定重试或转人工。
+
+### 常见追问
+
+**工具越多越好吗？** 不是，描述重叠会降低选择质量；按任务暴露必要能力并测工具选择混淆率。
+
+**函数调用失败是否应直接结束？** 看错误类别；缺参数可澄清，权限失败不能靠换工具绕过。
+
+## 参考资料
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [Hello Agents：经典范式学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%99%BA%E8%83%BD%E4%BD%93%E7%BB%8F%E5%85%B8%E8%8C%83%E5%BC%8F%E6%9E%84%E5%BB%BA.md)
+- [Agent 面试题：工具调用](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/04-工具调用.md)
+- [Agent 面试题：工程化实践](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/08-工程化实践.md)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -32,3 +32,52 @@ description: Agent 测试、可靠性、观测、性能成本与安全治理高�
 不能依赖一段“忽略恶意指令”的提示词。系统需要区分指令与数据，限制工具权限和可访问资源，对外部内容标记信任边界，并在高风险操作前执行参数校验和人工确认。
 
 延伸阅读：[提示词注入](/docs/agent-engineering/security-governance/prompt-injection)和 [权限边界](/docs/agent-engineering/security-governance/permission-boundaries)。
+
+## 6. 超时后的写请求能否直接重试？
+
+超时不等于未执行。先区分提交前失败、已提交但确认失败与未知状态；用稳定幂等键查询外部结果后再决定重试或人工处理。同时避免网关、SDK 和 Agent 多层重试相乘。
+
+延伸阅读：[幂等与去重](/docs/agent-engineering/reliability/idempotency-deduplication)。
+
+## 7. 总体成功率提高了，为什么仍可能不适合上线？
+
+总体平均可能掩盖高风险切片退化、越权、成本和尾延迟增长。关键安全约束作为独立门槛，按任务难度和租户切片比较，并保留样本量、重复运行与不确定性。
+
+延伸阅读：[离线评估](/docs/agent-engineering/evaluation-testing/offline-evaluation)。
+
+## 8. 为什么缓存命中率高可能是坏消息？
+
+过期答案、跨租户结果或过宽语义匹配也能提高命中率。缓存必须绑定身份、数据与模型版本，并设置更新失效规则；最终看正确性、隔离和单位成功成本。
+
+延伸阅读：[缓存](/docs/agent-engineering/performance-cost/caching)。
+
+## 9. 为什么模型权重装得下，高并发还是显存不足？
+
+权重只是显存账单的一部分。每条正在生成的序列还要保存 KV Cache，再加临时缓冲等占用。并发越多、上下文越长，缓存通常越大。容量估算要同时计算权重和服务负载，不能把“能启动模型”当成“能承接高峰”。
+
+延伸阅读：[模型推理：1 GiB KV Cache 计算例子](/docs/agent-general/llm-basics/model-adaptation-inference/model-inference)。
+
+## 10. Recall@k、Precision@k、Hit@k 有什么区别？
+
+召回率看“所需证据找回多少”，精确率看“取回材料多少有用”，命中率看“每道题至少找到一个没有”。如果一题需要两个片段，返回五个只命中一个，则召回率为 1/2、精确率为 1/5，单题命中为 1。命中过不代表证据完整。
+
+延伸阅读：[RAG：评估计算例子](/docs/agent-general/llm-basics/knowledge-retrieval/rag)。
+
+## 11. 没有大量标注数据，怎么开始评测？
+
+先人工核对少量代表题，把输入、证据、允许动作和成功标准写清，跑通检查流程。持续补充实际发现的失败案例，同时保留不参与调优的测试题。少量样例能发现问题，但不能据此声称生产成功率已经达到某个水平。
+
+延伸阅读：[离线评测](/docs/agent-engineering/evaluation-testing/offline-evaluation)。
+
+## 12. 服务慢，第一步是换更快的模型吗？
+
+先分解耗时：排队、检索、工具调用、处理输入、生成输出和网络分别占多少。若主要在等数据库，换模型帮助很小；若长输入拖慢首字，可评估减少无关上下文。一次只改可验证的瓶颈，并检查质量有没有下降。
+
+延伸阅读：[模型推理](/docs/agent-general/llm-basics/model-adaptation-inference/model-inference)、[并发与限流](/docs/agent-engineering/performance-cost/concurrency-rate-limiting)。
+
+## 本轮补充参考
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [LLM Universe：评估与检索排障学习入口](https://github.com/datawhalechina/llm-universe/blob/77beb748047e8a0d8ff708716606a8e0b132dc45/docs/C5/C5.md)
+
+参考源、固定提交和验证边界见 [参考资料](/docs/references)。

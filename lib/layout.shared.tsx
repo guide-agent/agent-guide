@@ -44,6 +44,16 @@ export function baseOptions(): BaseLayoutProps {
         active: 'nested-url',
       },
       {
+        text: 'K8s DRA',
+        url: '/docs/k8s-dra',
+        active: 'nested-url',
+      },
+      {
+        text: 'GPU 虚拟化',
+        url: '/docs/gpu-virtualization',
+        active: 'nested-url',
+      },
+      {
         text: '面试题专栏',
         url: '/docs/interview-questions',
         active: 'nested-url',

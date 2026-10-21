@@ -1,11 +1,19 @@
 ---
 title: Agent 通识
-description: 本片文章中，将介绍和 Agent 有关的一切信息，以 QA 的形式展现。
+description: 从 LLM 与 Agent 的边界出发，理解上下文、记忆、工具和决策闭环。
 ---
 
-## Agent 是什么？
+Agent 相关岗位通常同时考察模型基础、决策闭环和工程边界。本页先解释整体概念，具体机制与追问见各专题。
 
-随处可见的招聘软件，到处都充斥着 Agent 的影子，那 Agent 到底是什么？面试的时候改怎么回答这个问题？
+## 阅读路径
+
+1. [什么是大模型](/docs/agent-general/llm-basics/what-is-llm) → [Transformer](/docs/agent-general/llm-basics/model-tokenization/transformer) → [模型推理](/docs/agent-general/llm-basics/model-adaptation-inference/model-inference)。
+2. [提示工程](/docs/agent-general/llm-basics/prompt-context/prompt-engineering) → [上下文窗口](/docs/agent-general/llm-basics/prompt-context/context-window) → [RAG](/docs/agent-general/llm-basics/knowledge-retrieval/rag)。
+3. [Agent 边界](/docs/agent-general/agent-basics/definition-boundaries) → [Agent Loop](/docs/agent-general/agent-basics/agent-loop) → [工具](/docs/agent-general/agent-basics/tool-use)与[记忆](/docs/agent-general/agent-basics/memory)。
+
+各种组成公式是理解框架，不是强制组件清单；Agent 不一定要有独立规划模型或长期记忆。判断重点是目标、状态、动作、反馈和控制流。
+
+## Agent 是什么？
 
 ### 从 2025 年 Google AI Agent 白皮书理解
 
@@ -53,11 +61,11 @@ Agent 的眼睛：它不只是输入给模型的那段文本，而是 Agent 在�
 
 Agent 的手脚：它不只是几个可调用的 API 函数，而是 Agent 能做的所有事情的集合。
 
-AI 技术在不断与时俱进，日新月异的发生变化。不可拘泥于一藕，应当以探索，求知的心理应对变化。Agent 的本质是 LLMs 应用的扩展，基于 Context（Prompt） + Tool Call 不断衍生发展。
+这些公式强调不同抽象层次。工具、上下文和编排的具体组织应服从任务需求，不必拘泥于一种组件划分。
 
 ## LLMs 是什么？
 
-Large Language Models (LLMs)：大语言模型，Agent 的基础底座。Agent 本质是对 LLMs 的调用。
+Large Language Models（LLMs）是大语言模型，也是本站讨论的 LLM Agent 的主要决策组件。广义 Agent 并不必须使用 LLM；即使在 LLM Agent 中，工具执行、状态和验证也不能简化成一次模型调用。
 
 ## 普通应用和 Agent 应用有什么区别？
 
@@ -69,11 +77,11 @@ Large Language Models (LLMs)：大语言模型，Agent 的基础底座。Agent �
 
 ### LLMs 应用
 
-在应用程序中，LLMs 只提供用户回答，一次交互的模式，问什么回答什么。没有 Tool Call API 的模型。处于 AI 应用的最早期阶段。
+LLM 应用可以是单次生成、多轮对话、检索问答或固定工具工作流，也可以支持 Tool Call。它与 Agent 的区别不在是否有工具 API，而在主要控制流是否由模型根据环境反馈动态决定。
 
 ### Agent 应用
 
-基于 LLMs 之上的高级 AI 应用，Agent 本身具有外界感知，思考能力。结合 RAG、ReAct等技术手段设计的多轮 LLMs 调用的应用。
+LLM Agent 在授权动作空间内，根据目标、状态和环境反馈持续选择下一步。RAG、ReAct 和长期记忆都是可选设计，并非定义 Agent 的必要条件。
 
 ## 开发 Agent 应用需要什么技术，什么能力？
 

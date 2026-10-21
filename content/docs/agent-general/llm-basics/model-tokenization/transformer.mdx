@@ -1,4 +1,51 @@
 ---
 title: Transformer
+description: "Transformer 为什么需要注意力、位置编码和因果掩码？"
 ---
 
+## 面试题：Transformer 为什么需要注意力、位置编码和因果掩码？
+
+### 30 秒回答
+
+Transformer 可以先理解为一套“让文本各个位置交换信息，再加工这些信息”的网络。注意力决定当前位置参考哪些内容，位置信息帮助区分顺序，因果掩码则防止生成模型偷看后文。它们解决的是三个不同问题。
+
+### 用一个例子理解
+
+在“小周把文件交给小林，他随后离开了”中，理解“他”需要联系前文；注意力提供这种联系，但不保证消除歧义。“小周追小林”和“小林追小周”用词相同、意思不同，所以还需要位置信息。训练预测下一个 token 时，还要挡住未来位置，不能把答案提前透露给模型。
+
+### 关键机制与取舍
+
+- Q（Query，查询）可理解为当前位置“想找什么”，K（Key，键）表示其他位置“可用于匹配的特征”，V（Value，值）是匹配后汇总的信息。三者由向量变换得到，不是模型真的生成了三句自然语言。
+- Q、K 的相似度经缩放与归一化后成为权重，再加权汇总 V。归一化让这些权重形成一组比例；多头可以学习不同关系，不意味着某个头天生只负责语法或指代。
+- 标准稠密注意力的序列两两交互随长度平方增长；FlashAttention 主要减少中间矩阵物化和显存访问，不是把所有计算都变成线性。
+- Decoder-only 不要求额外的 encoder；encoder-decoder 中的交叉注意力也不能与 decoder 自注意力混为一谈。
+
+### 再深入一点：MHA、MQA、GQA 在共享什么？
+
+先记住：这里共享的是 K/V 头，不是把所有查询都变成一个。
+
+- **MHA（多头注意力）**：每个查询头有对应的 K/V 头。
+- **MQA（多查询注意力）**：多个查询头共用一组 K/V。
+- **GQA（分组查询注意力）**：查询头分组，每组共用一组 K/V，是两者之间的方案。
+
+假设有 8 个查询头：MHA 可以有 8 组 K/V，MQA 只有 1 组，GQA 可以有 2 组、每组服务 4 个查询头。保持其他条件相同时，K/V 组数减少，KV Cache 就会更小。这个例子只解释常见结构，不表示任意现有模型都能改一个参数无损切换。
+
+**面试容易说错的地方：** GQA 不是“多个用户共享聊天记录”；FlashAttention 也不是 KV Cache。前者改变注意力头的组织，后者优化注意力计算时的数据搬运，KV Cache 则复用历史计算结果。
+
+### 场景与失败处理
+
+长文问答显存不足时，先区分权重、KV Cache 和临时缓冲占用。缩短上下文可能缓解，但需要验证关键证据是否丢失；换注意力实现也不能代替容量测算。
+
+### 常见追问
+
+**为什么缓存 K/V 而不是历史 Q？** 生成新位置只需要新位置的查询与历史键值交互，历史查询对应的输出不需要重算。
+
+**有位置编码就能无限外推吗？** 不能，实际能力还取决于训练长度、位置方案和长上下文评测。
+
+## 参考资料
+
+- [LLM 笔记：MHA、MQA 与 GQA 考点](https://github.com/wdndev/llm_interview_note/blob/581d54dd9a72e1d0a4eb28ae50859db83901b783/02.%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84/MHA_MQA_GQA/MHA_MQA_GQA.md)
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [LLM 问答：位置、推理与 KV Cache](https://github.com/KalyanKS-NLP/LLM-Interview-Questions-and-Answers-Hub/blob/280c8b642acd65006b11aad76633826a867f3a63/Interview_QA/QA_1-3.md)
+- [推理优化考点与原始论文入口](https://github.com/MisterBooo/llm-interview-questions/blob/320048c20288c2d3afb695f97a55e91315c60fdf/modules/inference-optimization.md)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -1,4 +1,33 @@
 ---
 title: 容量规划
+description: "如何估算 Agent 系统容量，而不只看入口 QPS？"
 ---
 
+## 面试题：如何估算 Agent 系统容量，而不只看入口 QPS？
+
+### 回答框架
+
+每个任务会触发多次模型与工具调用，容量取决于任务分布、扇出、平均占用时间、外部额度和持久存储。可用 Little 定律估算稳态在途量约为到达率乘平均停留时间，但突发、尾延迟和重试需要额外测量。
+
+### 关键机制与取舍
+
+- 按任务类别估计调用次数、输入输出长度、工具耗时和同时运行数量。
+- 区分 CPU、连接池、模型配额、GPU 显存和队列瓶颈，找到最先饱和的环节。
+- 压测同时报告成功率与尾延迟，逐步升负载并测试降级、取消和恢复，保留容量余量。
+
+### 场景与失败处理
+
+正常任务三步完成，异常时十轮重试，峰值容量被放大。容量模型应包含故障比例与重试预算，否则平均成功路径会严重低估需求。
+
+### 常见追问
+
+**GPU 显存够就能接更多请求吗？** 还要看 KV 增长、计算、通信、排队和服务延迟目标。
+
+**没有真实流量怎么办？** 构造明确标注的负载分布，报告假设，不把估算写成生产实测。
+
+## 参考资料
+
+- [Agent 面试题：工程化实践](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/08-工程化实践.md)
+- [推理优化考点与原始论文入口](https://github.com/MisterBooo/llm-interview-questions/blob/320048c20288c2d3afb695f97a55e91315c60fdf/modules/inference-optimization.md)
+- [Kubernetes 面试与排障考点](https://github.com/bregman-arie/devops-exercises/blob/9e49ef97f16377d901db01f3562187394828ca6a/topics/kubernetes/README.md)
+- [来源快照、使用边界与验证说明](/docs/references)

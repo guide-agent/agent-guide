@@ -11,6 +11,9 @@ description: 按知识、架构、工程与实战场景组织的 AI Agent 面试
 - [架构与开发](/docs/interview-questions/architecture-development)：单 Agent、多 Agent、工作流、状态管理与协议集成。
 - [工程实践](/docs/interview-questions/engineering-practice)：测试评估、可靠性、观测调试、性能成本与安全治理。
 - [项目与 AI Coding](/docs/interview-questions/project-ai-coding)：项目介绍、系统设计、任务拆解、代码检索与验证闭环。
+- [K8s DRA 与 GPU 虚拟化](/docs/interview-questions/k8s-gpu)：设备资源、调度分配、共享隔离、驱动排障与性能验证。
+
+题库中的短答用于快速自测；每题的延伸阅读包含机制、失败场景及追问。来源与版本边界见 [参考资料](/docs/references)，不要把教学案例或方案设计直接写成个人生产业绩。
 
 ## 使用方法
 
@@ -18,3 +21,12 @@ description: 按知识、架构、工程与实战场景组织的 AI Agent 面试
 2. 用真实项目中的输入、决策、结果和数据支撑观点。
 3. 主动补充失败路径、降级策略与验证方法。
 4. 涉及选型时比较备选方案，并讲清收益、成本和风险。
+
+## 想先看容易懂的答案？
+
+建议按下面的顺序走一遍。先读短答，再看例子，遇到追问时再展开机制；没有项目经验时，明确把例子说成设计思路，不当成个人业绩。
+
+- **模型怎么工作**：[Token](/docs/agent-general/llm-basics/model-tokenization/token-tokenizer) → [Transformer](/docs/agent-general/llm-basics/model-tokenization/transformer) → [推理与 KV 显存计算](/docs/agent-general/llm-basics/model-adaptation-inference/model-inference)。
+- **资料怎么用对**：[RAG 报销问答例子](/docs/agent-general/llm-basics/knowledge-retrieval/rag) → [微调和 LoRA](/docs/agent-general/llm-basics/model-adaptation-inference/fine-tuning) → [离线评测](/docs/agent-engineering/evaluation-testing/offline-evaluation)。
+- **Agent 怎么可靠执行**：[Agent Loop](/docs/agent-general/agent-basics/agent-loop) → [Checkpoint 存档例子](/docs/agent-development/workflow-state/checkpoint) → [幂等与去重](/docs/agent-engineering/reliability/idempotency-deduplication)。
+- **GPU 怎么分配和共享**：[GPU 扫盲](/docs/gpu-virtualization/gpu-basics) → [DRA 扫盲](/docs/k8s-dra/from-container-to-dra) → [DRA 四个对象](/docs/k8s-dra/core-resources) → [共享方案比较](/docs/gpu-virtualization/sharing-comparison) → [时间片为何不是显存切片](/docs/gpu-virtualization/time-slicing-mps)。

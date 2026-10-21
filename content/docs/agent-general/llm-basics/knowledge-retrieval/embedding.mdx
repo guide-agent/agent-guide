@@ -1,4 +1,38 @@
 ---
 title: Embedding
+description: "Embedding 相似度高，为什么仍可能检索错答案？"
 ---
 
+## 面试题：Embedding 相似度高，为什么仍可能检索错答案？
+
+### 30 秒回答
+
+Embedding 是把一段内容表示成一串数字，方便按语义找相近材料。相近只说明“谈的事情像”，不代表“能回答问题”，更不代表内容正确、最新或有权限查看。因此向量检索还要配合版本、权限和关键词检查。
+
+### 用一个例子理解
+
+问“试用期可以报销打车费吗”，检索到了“正式员工打车报销办法”。两段话都在说报销，所以可能很相似，但适用人群不同。应先筛选有效政策和适用对象，再找能直接回答问题的条款。相似度 0.9 也不能解释成答案有 90% 概率正确。
+
+### 关键机制与取舍
+
+- 索引与查询采用兼容的模型、维度、归一化和距离度量；换模型通常需要重建或双写索引。
+- 保留文档版本、切片位置和权限信息，在查询链路应用过滤；向量库不是权限系统的替代品。
+- 区分召回质量与生成质量，用带相关性标注的查询测 Recall@k、排序指标及下游答案正确率。
+
+### 场景与失败处理
+
+用户查询产品错误码，语义检索召回另一个相似故障。可结合关键词检索与向量召回，再对候选重排；先检查原文是否存在，不能用增大 top-k 掩盖数据缺失。
+
+### 常见追问
+
+**维度越大越好吗？** 不一定，需比较数据域效果、存储、索引和延迟，不能跨模型只比维度。
+
+**余弦相似度能当置信度吗？** 不能直接当正确概率，应在目标数据集校准阈值并保留拒答路径。
+
+## 参考资料
+
+- [LLM Universe：知识库构建学习入口](https://github.com/datawhalechina/llm-universe/blob/77beb748047e8a0d8ff708716606a8e0b132dc45/docs/C3/C3.md)
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [LLM 面试考点索引](https://github.com/KalyanKS-NLP/LLM-Interview-Questions-and-Answers-Hub/blob/280c8b642acd65006b11aad76633826a867f3a63/README.md)
+- [评估与监控考点索引](https://github.com/MisterBooo/llm-interview-questions/blob/320048c20288c2d3afb695f97a55e91315c60fdf/modules/evaluation-monitoring.md)
+- [来源快照、使用边界与验证说明](/docs/references)

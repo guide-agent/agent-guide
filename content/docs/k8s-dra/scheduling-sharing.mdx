@@ -1,0 +1,37 @@
+---
+title: "调度约束与共享边界"
+description: "DRA 的属性匹配与设备共享有什么边界？"
+---
+
+## 面试题：DRA 的属性匹配与设备共享有什么边界？
+
+### 30 秒回答
+
+DRA 能按设备属性匹配需求，但 Pod 还要同时满足 CPU、内存、存储和节点规则。多个任务能引用同一声明，也不等于每个任务自动获得独立显存和稳定算力。共享是否可用、如何限额，要看具体驱动和底层机制。
+
+### 用一个例子理解
+
+节点 A 有合适 GPU，节点 B 才有任务所需的数据卷，任务仍可能无法调度。这不是把“集群空闲 GPU 总数”加起来就能解决的。即使多个任务最终共用一张卡，也要另行处理显存争用和互相拖慢的问题。
+
+### 关键机制与取舍
+
+- 选择条件基于真实 ResourceSlice，注意属性缺失、单位和容量含义；未知不应当作无限容量。
+- Pod 仍需满足 CPU、内存、亲和性、污点和存储等约束，GPU 满足只是调度条件的一部分。
+- 多 GPU 任务还可能需要拓扑与协同启动，DRA 不等同于完整的批调度或 gang scheduling 系统。
+
+### 场景与失败处理
+
+Claim 能在节点 A 找到设备，但 Pod 的存储约束只能在节点 B 满足。需要联合检查调度条件，不能只用集群总空闲卡数推断任务必能运行。
+
+### 常见追问
+
+**为什么不按 GPU 数量简单装箱？** 不同型号、显存、互联和共享模式可能不等价，且还受碎片化与业务延迟约束。
+
+**允许共享就可以接不可信租户吗？** 不应据此判断，必须验证硬件与软件隔离，以及共同故障域。
+
+## 参考资料
+
+- [Kubernetes：DRA API](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/dra-api/)
+- [Kubernetes 面试与排障考点](https://github.com/bregman-arie/devops-exercises/blob/9e49ef97f16377d901db01f3562187394828ca6a/topics/kubernetes/README.md)
+- [NVIDIA Device Plugin：设备暴露与共享](https://github.com/NVIDIA/k8s-device-plugin/blob/1053da35d5a67fdbc3f0ea0877b7178026048769/README.md)
+- [来源快照、使用边界与验证说明](/docs/references)

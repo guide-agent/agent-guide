@@ -1,0 +1,36 @@
+---
+title: "DRA 核心资源对象"
+description: "DeviceClass、ResourceSlice、ResourceClaim 和模板分别负责什么？"
+---
+
+## 面试题：DeviceClass、ResourceSlice、ResourceClaim 和模板分别负责什么？
+
+### 30 秒回答
+
+先记四句话：DeviceClass 规定可以选哪类设备；ResourceSlice 列出实际设备和属性；ResourceClaim 写任务需求并记录分配结果；ResourceClaimTemplate 是生成 Claim 的模板。DRA 把“有什么”和“要什么”分开，让调度时能够匹配。
+
+### 用一个例子理解
+
+可以把它们理解为选购规则、库存清单、申请单和空白申请单模板。任务要一张满足条件的 GPU，系统对照真实库存选择。这个类比只解释对象职责：DeviceClass 不是实体卡，Claim 也不是凭空制造设备。
+
+### 关键机制与取舍
+
+- DeviceClass 与 ResourceSlice 是集群范围对象；Claim 与 Template 属于命名空间，权限与生命周期需分别管理。
+- 属性名称和容量由驱动发布，不能把某厂商示例字段当所有设备的标准字段。
+- 使用 resource.k8s.io API 时核对集群实际提供的版本、字段和特性，不能只替换 apiVersion 就认为兼容。
+
+### 场景与失败处理
+
+Claim 要求某显存属性，但实际 ResourceSlice 不含该字段。先检查驱动发布内容和硬件支持，再修选择条件；不能把 Pending 一概解释为卡已用完。
+
+### 常见追问
+
+**DeviceClass 是一张物理卡吗？** 不是，它定义选择范围；具体设备信息在 ResourceSlice，分配结果记录在 Claim。
+
+**模板与直接建 Claim 怎么选？** 按是否需要每个 Pod 独立声明、共享以及声明生命周期选择，并核对实际所有者引用。
+
+## 参考资料
+
+- [Kubernetes：DRA API](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/dra-api/)
+- [AMD GPU DRA 排障与已知限制](https://github.com/ROCm/k8s-gpu-dra-driver/blob/0ac3a6e01623fbdc4f74a87d60616fbcc1c0fa30/docs/troubleshooting.md)
+- [来源快照、使用边界与验证说明](/docs/references)

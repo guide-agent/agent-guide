@@ -32,3 +32,64 @@ description: Agent、LLM、上下文、记忆、工具调用与 RAG 高频面试
 检索增强生成（Retrieval-Augmented Generation，RAG）只能改善证据供给，不能保证检索结果相关、完整或被模型正确使用。回答时可从召回质量、切分策略、排序、上下文冲突、引用约束和答案验证六个方面展开。
 
 延伸阅读：[RAG](/docs/agent-general/llm-basics/knowledge-retrieval/rag)。
+
+## 6. KV Cache 缓存了什么，为什么会成为并发瓶颈？
+
+缓存各层历史 token 的 K/V 中间表示，减少自回归生成的重复计算；新 token 的相关计算仍然存在。容量随序列长度、批次、层数和 KV 头规模增长，所以权重能放入显存不代表能承接任意并发。回答时区分 Prefill、Decode、排队与服务指标。
+
+延伸阅读：[模型推理](/docs/agent-general/llm-basics/model-adaptation-inference/model-inference)。
+
+## 7. LoRA 是否一定比全参数微调训练更快？
+
+不一定。LoRA 减少可训练参数、参数梯度和优化器状态，但仍需要主干前向及相关梯度传播；激活、重计算、通信和算子实现也影响时间。应固定数据、硬件和训练设置比较，不把显存节省自动当作等比例加速。
+
+延伸阅读：[微调](/docs/agent-general/llm-basics/model-adaptation-inference/fine-tuning)。
+
+## 8. Schema 合法的模型输出为什么还不能直接执行？
+
+Schema 约束结构，不证明资源归属、金额、状态或授权。工具入口还要做业务与权限检查，流式参数完整后才执行。结果未知的写操作不能因为格式正确就直接重试。
+
+延伸阅读：[结构化输出](/docs/agent-general/llm-basics/prompt-context/structured-output)。
+
+## 9. MHA、MQA、GQA 用一句话怎么区分？
+
+它们主要区别在多个查询头怎样使用 K/V：MHA 各有对应 K/V，MQA 共用一组，GQA 分组共用。K/V 组数减少有利于降低缓存占用，但不代表任意模型都能无损切换，也不是多个用户共享对话。
+
+延伸阅读：[Transformer：注意力头的例子](/docs/agent-general/llm-basics/model-tokenization/transformer)。
+
+## 10. RAG 中召回、重排、生成各做什么？
+
+召回先找“可能有关”的材料，重排在候选里挑“更能回答问题”的材料，生成把证据组织成回答。像找书、选章节、写答案三个步骤。书架上没有资料，重排和生成都不能凭空补出可靠依据。
+
+延伸阅读：[RAG](/docs/agent-general/llm-basics/knowledge-retrieval/rag)。
+
+## 11. 为什么切片重叠太多也不好？
+
+重叠有助于保留边界上下文，但太多会让相同内容反复出现在结果里，挤掉其他证据并增加费用。先按条款、标题或段落保留完整意思，再通过评测选长度和重叠范围，不背一个万能参数。
+
+延伸阅读：[RAG：切片与 top-k](/docs/agent-general/llm-basics/knowledge-retrieval/rag)。
+
+## 12. LoRA、QLoRA、量化、蒸馏有什么区别？
+
+LoRA 训练小的权重更新模块；QLoRA 在量化后的冻结基座上训练这类模块；量化降低数值存储精度；蒸馏让学生学习教师提供的信号，常用于得到更小模型。它们都可能降低部分成本，但优化的是不同环节，不能用一个加速倍数概括。
+
+延伸阅读：[微调：参数量计算与概念比较](/docs/agent-general/llm-basics/model-adaptation-inference/fine-tuning)。
+
+## 13. 温度设为零，就能保证事实正确和逐字复现吗？
+
+不能。温度主要影响候选选择，错误内容也可能得到最高分。即便解码接近确定性，服务版本、硬件计算和后端调度等差异也可能影响结果。要提高可信度，应提供证据并验证，而不是只调整温度。
+
+延伸阅读：[模型推理](/docs/agent-general/llm-basics/model-adaptation-inference/model-inference)。
+
+## 14. 什么时候不必上 RAG 或 Agent？
+
+资料短且固定时，可以先比较直接提供上下文；任务只是几个明确步骤时，固定程序可能更简单。只有检索或动态决策带来的收益超过额外延迟、成本和维护负担时，再引入复杂组件。先解决问题，不为堆技术名词加架构。
+
+延伸阅读：[RAG](/docs/agent-general/llm-basics/knowledge-retrieval/rag)、[Agent 边界](/docs/agent-general/agent-basics/definition-boundaries)。
+
+## 本轮补充参考
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [LLM Universe：评估与检索排障学习入口](https://github.com/datawhalechina/llm-universe/blob/77beb748047e8a0d8ff708716606a8e0b132dc45/docs/C5/C5.md)
+
+参考源、固定提交和验证边界见 [参考资料](/docs/references)。

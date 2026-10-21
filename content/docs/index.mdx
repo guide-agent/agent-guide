@@ -3,10 +3,10 @@ title: Agent 面试指南
 description: 系统整理 AI Agent 面试题、知识要点与工程实践。
 ---
 
-这里用于沉淀 Agent 相关的面试题、答案框架、工程经验和延伸阅读。内容按主题组织，每道题建议同时记录“考察点、回答框架、常见误区和追问方向”。
+这里按九个栏目整理 Agent、AI Coding 与算力基础设施的知识和面试问答。主题页解释机制、取舍、失败场景与追问；面试题专栏提供跨主题速查。先尝试独立作答，再核对证据与边界，不把参考答案当成唯一实现。
 
 <Callout type="info" title="使用建议">
-  先阅读“题库使用说明”，再从基础概念开始。回答问题时优先解释决策依据和工程权衡，不要只背术语。
+  先阅读“题库使用说明”。项目设计与故障场景属于教学说明，未标注运行证据的内容不代表已上线或实测；版本和来源见“参考资料”。
 </Callout>
 
 ## 内容导航
@@ -15,19 +15,45 @@ description: 系统整理 AI Agent 面试题、知识要点与工程实践。
   <Card title="题库使用说明" href="/docs/guide">
     了解文档结构、题目模板与维护方式。
   </Card>
-  <Card title="Agent 基础概念" href="/docs/agent-basics">
-    理解 Agent 的组成、运行循环与适用边界。
+  <Card title="Agent 通识" href="/docs/agent-general">
+    从 LLM、上下文、检索到 Agent Loop、工具与记忆。
   </Card>
-  <Card title="工具调用" href="/docs/agent-basics/tool-use">
-    覆盖工具协议、参数校验、失败恢复和权限控制。
+  <Card title="Agent 架构与模式" href="/docs/agent-architecture">
+    比较工作流、单 Agent、多 Agent 及推理与协作模式。
   </Card>
-  <Card title="上下文与记忆" href="/docs/agent-basics/context-memory">
-    区分上下文、短期记忆、长期记忆与检索增强。
+  <Card title="Agent 开发" href="/docs/agent-development">
+    工具契约、状态恢复、SDK、MCP、A2A、AG-UI 与运行环境。
   </Card>
-  <Card title="评估与调试" href="/docs/agent-basics/evaluation">
-    建立可复现的 Agent 评估与故障定位方法。
+  <Card title="Agent 工程" href="/docs/agent-engineering">
+    评估、可靠性、权限、观测、性能成本与部署运维。
+  </Card>
+  <Card title="项目实战" href="/docs/project-practice">
+    需求与选型、端到端设计、复盘和真实项目表达。
+  </Card>
+  <Card title="AI Coding" href="/docs/ai-coding">
+    任务拆解、代码检索、补丁、验证与公开实现阅读。
+  </Card>
+  <Card title="K8s DRA" href="/docs/k8s-dra">
+    设备资源模型、分配回收、驱动接入与调度排障。
+  </Card>
+  <Card title="GPU 虚拟化" href="/docs/gpu-virtualization">
+    Time-slicing、MPS、MIG、vGPU、HAMi 与隔离验证。
+  </Card>
+  <Card title="面试题专栏" href="/docs/interview-questions">
+    按基础、架构、工程、项目与算力专题集中自测。
+  </Card>
+  <Card title="参考资料" href="/docs/references">
+    GitHub 仓库、固定提交、官方文档与使用边界。
   </Card>
 </Cards>
+
+## 如何选择阅读路线
+
+- **Agent 应用开发**：通识 → 架构 → 开发 → 工程，再选择一个项目场景验证设计。
+- **Coding Agent**：工具与上下文基础 → AI Coding 方法与原理 → 产品实践与固定版本源码。
+- **算力基础设施**：GPU 共享机制 → Kubernetes 设备分配 → DRA 生命周期 → 隔离与性能验收。
+
+旧版 [Agent 核心题库](/docs/agent-basics) 保留原路径便于既有链接访问；完整主题以新版九个栏目为主。
 
 ## 推荐回答结构
 

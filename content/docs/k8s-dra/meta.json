@@ -1,0 +1,14 @@
+{
+  "title": "K8s DRA",
+  "root": true,
+  "pages": [
+    "index",
+    "from-container-to-dra",
+    "core-resources",
+    "device-plugin-vs-dra",
+    "allocation-lifecycle",
+    "driver-cdi",
+    "scheduling-sharing",
+    "troubleshooting"
+  ]
+}

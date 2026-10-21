@@ -1,4 +1,38 @@
 ---
 title: Agent 的定义与边界
+description: "如何区分 Agent、聊天机器人与固定工作流？"
 ---
 
+## 面试题：如何区分 Agent、聊天机器人与固定工作流？
+
+### 30 秒回答
+
+区分 Agent 与固定工作流，最简单的问题是“下一步由谁决定”。工作流按预先写好的步骤走；Agent 会根据目标和刚获得的结果，在允许的动作中选择下一步。有没有聊天框、有没有调用工具，都不能单独作为判断标准。
+
+### 用一个例子理解
+
+程序固定执行“查快递、返回结果”，是工作流。系统发现快递长时间未更新后，自主决定先查物流公告还是联系人工，才体现 Agent 的动态决策。真正发消息或改订单，仍必须受到权限和业务规则约束。
+
+### 关键机制与取舍
+
+- 明确目标、可用动作、观察和停止条件；不要求一定有长期记忆或独立的规划模型。
+- 工具调用也能由固定程序编排，单次函数调用不能单独证明系统具有自治闭环。
+- 比较自治收益与验证成本，财务入账等规则清晰的步骤优先保留确定性控制。
+
+### 场景与失败处理
+
+“查订单再按规则退款”的固定流程未必需要 Agent；当用户问题模糊、需要多源排查时可让 Agent 检索，真正退款仍由明确授权和业务规则控制。
+
+### 常见追问
+
+**RAG 应用就是 Agent 吗？** 不一定；固定检索后生成是工作流，动态决定检索与行动才体现自治。
+
+**Agent 越自主越好吗？** 不，自治范围应与任务收益、可观测性和错误代价匹配。
+
+## 参考资料
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [Hello Agents：经典范式学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%99%BA%E8%83%BD%E4%BD%93%E7%BB%8F%E5%85%B8%E8%8C%83%E5%BC%8F%E6%9E%84%E5%BB%BA.md)
+- [Agent 面试题：基础概念](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/01-基础概念.md)
+- [Agent 面试题：核心模式](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/02-核心框架.md)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -1,0 +1,36 @@
+---
+title: "DRA 排障与面试案例"
+description: "使用 DRA 的 Pod 一直 Pending，按什么顺序排查？"
+---
+
+## 面试题：使用 DRA 的 Pod 一直 Pending，按什么顺序排查？
+
+### 30 秒回答
+
+Pod 一直 Pending，先问“卡在哪一步”：集群是否认识这些对象，驱动是否发布了设备，Claim 是否匹配并分配，Pod 是否还受其他调度条件限制。先看事件和对象状态，再查对应组件日志，不要一上来就重装驱动。
+
+### 用一个例子理解
+
+申请单要求一个显存属性，但库存里没有这个字段，原因可能是驱动未发布，而不是卡被用完。若已经分配却启动失败，就换查节点准备、运行时和容器错误；始终让证据决定下一步。
+
+### 关键机制与取舍
+
+- 先核对集群支持的 resource.k8s.io 资源、驱动版本与部署状态，再看目标节点的 ResourceSlice。
+- 比较 Claim 条件与真实属性、容量和占用，检查是否请求了同节点无法满足的设备组合。
+- 已分配时继续看 Pod 的亲和性、污点、其他资源与节点准备错误，不把所有 Pending 归为 GPU 不足。
+
+### 场景与失败处理
+
+ROCm 文档指出读取显存失败可能发布 memory: 0 并记录告警。这表示发现异常，不是物理 GPU 真无显存；应修节点发现问题，不能把选择条件放宽成接受零容量来掩盖故障。
+
+### 常见追问
+
+**先收集什么证据？** 集群和驱动版本、Pod describe、Claim 状态、ResourceSlice 与对应节点驱动日志，分享前脱敏。
+
+**重启驱动可以作为最终修复吗？** 只有理解根因并验证重启后的发现、分配和回收才可判断，暂时恢复不等于根因消失。
+
+## 参考资料
+
+- [AMD GPU DRA 排障与已知限制](https://github.com/ROCm/k8s-gpu-dra-driver/blob/0ac3a6e01623fbdc4f74a87d60616fbcc1c0fa30/docs/troubleshooting.md)
+- [Kubernetes：DRA 官方概念](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/)
+- [来源快照、使用边界与验证说明](/docs/references)

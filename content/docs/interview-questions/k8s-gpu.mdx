@@ -1,0 +1,94 @@
+---
+title: K8s DRA 与 GPU 虚拟化
+description: 从设备声明与调度到 GPU 共享、隔离和性能验证的面试问答。
+---
+
+这些问题用于机制自测，不代表已部署相应集群。实现和配置必须核对 Kubernetes、设备驱动、运行时与硬件版本。
+
+## 1. DRA 和 GPU 虚拟化解决的是同一个问题吗？
+
+不是。DRA 负责 Kubernetes 中的设备表达、声明与分配协作；GPU 共享、切分和隔离依赖硬件、驱动与具体方案。DRA 不会自动把整卡切成有显存配额的虚拟卡。
+
+延伸阅读：[设备插件与 DRA](/docs/k8s-dra/device-plugin-vs-dra)。
+
+## 2. DeviceClass、ResourceSlice、ResourceClaim 怎样配合？
+
+Class 定义设备选择范围，Slice 发布设备库存、属性和容量，Claim 描述具体需求并记录分配。Template 帮助为 Pod 创建声明。应区分集群范围与命名空间范围，以及设备信息与业务需求。
+
+延伸阅读：[DRA 资源模型](/docs/k8s-dra/core-resources)。
+
+## 3. Claim 已分配，为什么 Pod 仍不能使用 GPU？
+
+分配后仍有 Pod 放置、节点准备、运行时设备注入与驱动兼容等步骤。先判断失败阶段，再检查事件、节点驱动与运行时；已分配不等于应用可用。
+
+延伸阅读：[设备生命周期](/docs/k8s-dra/allocation-lifecycle)。
+
+## 4. DRA Pod Pending 时，先看什么？
+
+核对 API 与驱动版本，检查 ResourceSlice 是否发布、属性是否真实存在、Claim 条件是否匹配，再看 Pod 其他调度约束。集群总空闲 GPU 数量不能证明某个节点能满足完整请求。
+
+延伸阅读：[DRA 排障](/docs/k8s-dra/troubleshooting)。
+
+## 5. CDI 是否提供 GPU 隔离？
+
+CDI 规范设备向容器运行时的接入方式，不等于显存分区、算力配额或安全沙箱。真实隔离需要对应硬件、驱动和执行边界，并在目标环境验证。
+
+延伸阅读：[驱动与 CDI](/docs/k8s-dra/driver-cdi)。
+
+## 6. Time-slicing 配置多个 replicas，是否每份获得固定显存？
+
+不是。NVIDIA Device Plugin 的时间片副本表示共享访问份额，不是自动分割显存或承诺等比算力。多个任务仍可能相互干扰并处于共同故障域。
+
+延伸阅读：[时间片与 MPS](/docs/gpu-virtualization/time-slicing-mps)。
+
+## 7. MIG 为什么仍可能出现资源碎片？
+
+支持的实例规格与组合不是任意拆分。若干空闲小实例不一定能直接满足一个大规格请求，重配置还可能需要排空与维护窗口。调度需结合实际 profile 与节点状态。
+
+延伸阅读：[MIG](/docs/gpu-virtualization/mig)。
+
+## 8. HAMi 的资源限额是否等于硬件强隔离？
+
+不能等同。HAMi 协调调度、插件与设备特定实现，能力随后端、驱动和版本变化；软件配额与强安全隔离是不同问题，需验证实际限制是否生效及可绕过路径。
+
+延伸阅读：[HAMi](/docs/gpu-virtualization/hami)。
+
+## 9. 共享后吞吐提升，怎样判断是否真的优化了？
+
+同时检查关键租户的 P95/P99、TTFT、TPOT、排队和失败率，并固定模型、硬件、输入输出分布及缓存状态。吞吐提升但延迟目标失守，不能算满足原业务约束的优化。
+
+延伸阅读：[性能与隔离验证](/docs/gpu-virtualization/benchmark-isolation)。
+
+## 10. 从 Device Plugin 迁移到 DRA 最大的资源风险是什么？
+
+同一物理设备被两套管理机制同时当作空闲设备分配。迁移应明确资源所有权、驱动部署范围、任务排空与回滚，验证发现、分配、使用和回收全链路，而不只是改 Pod YAML。
+
+延伸阅读：[迁移与选型](/docs/k8s-dra/device-plugin-vs-dra)。
+
+## 11. 显存、算力、带宽有什么区别？
+
+显存容量决定数据能否装下，计算能力影响运算吞吐，带宽影响数据搬运速度。像工作区大小、加工速度和送料速度三个不同条件；其中一项不足，都可能限制任务。显存更多不等于每次推理都更快。
+
+延伸阅读：[GPU 扫盲](/docs/gpu-virtualization/gpu-basics)。
+
+## 12. 调大 Pod 的 memory limit 能解决 CUDA OOM 吗？
+
+通常不能直接解决，因为普通 Pod 的 memory 限制管理主机内存，不是 GPU 显存配额。先分清容器主机内存不足、设备显存不足与共享限额，再检查权重、KV Cache、中间结果和分配器状态，不要见到 OOM 就盲目加同一种资源。
+
+延伸阅读：[两类内存不足与排查方法](/docs/gpu-virtualization/gpu-basics)。
+
+## 13. GPU 利用率 100%，是不是算力已经用满？
+
+不能直接这样理解。相应利用率指标主要反映采样窗口内有计算程序执行的时间比例，不等于实际达到了峰值运算吞吐。应结合带宽、显存、请求完成量和延迟判断；卡一直忙，也可能是数据搬运或低效计算。
+
+延伸阅读：[GPU 指标扫盲](/docs/gpu-virtualization/gpu-basics)、[性能验证](/docs/gpu-virtualization/benchmark-isolation)。
+
+## 14. GPU Operator、DRA、作业队列是不是同一层？
+
+不是。Operator 主要管理所支持的软件组件；DRA 负责设备需求表达与分配协作；作业队列处理谁先进入、谁等待等治理问题。它们可以配合，但都不能仅凭自身存在就证明 GPU 已被正确切分或隔离。
+
+延伸阅读：[DRA 扫盲](/docs/k8s-dra/from-container-to-dra)。
+
+## 回答时应携带的证据
+
+说明使用的 API 与驱动版本、GPU 型号、真实对象状态和实验负载。未知能力明确说待核实，不把某厂商功能扩展为通用标准。来源快照见 [参考资料](/docs/references)。
