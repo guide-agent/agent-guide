@@ -1,3 +1,62 @@
 ---
 title: Agent 工程
+description: "本栏目讨论 Agent 从能演示到可验证、可恢复和可运营所需的工程能力。"
 ---
+
+本栏目讨论 Agent 从能演示到可验证、可恢复和可运营所需的工程能力。质量、可靠性、权限、成本与部署相互约束，不应只用回答流畅度或单次延迟评价系统。
+
+## 推荐学习路径
+
+先建立评测和运行证据，再处理重试、幂等与权限，最后基于真实瓶颈做优化。
+
+## 专题导航
+
+### 评估与测试
+
+- [离线评测](/docs/agent-engineering/evaluation-testing/offline-evaluation)：怎样建立能指导迭代的离线评测集？
+- [在线评测](/docs/agent-engineering/evaluation-testing/online-evaluation)：离线分数更高，为什么上线仍可能变差？
+- [单元与集成测试](/docs/agent-engineering/evaluation-testing/unit-integration-testing)：Agent 测试如何分层，才能既稳定又贴近真实行为？
+- [回归测试](/docs/agent-engineering/evaluation-testing/regression-testing)：改了一个提示词，为什么还要回归相邻功能？
+
+### 可观测性与调试
+
+- [Trace](/docs/agent-engineering/observability-debugging/trace)：Agent Trace 应记录什么才有排障价值？
+- [日志与运行轨迹](/docs/agent-engineering/observability-debugging/logs-execution-history)：运行日志与用户会话历史为什么要分开？
+- [Token 与成本统计](/docs/agent-engineering/observability-debugging/token-cost-metrics)：怎样计算 Agent 的真实成本？
+- [故障定位](/docs/agent-engineering/observability-debugging/troubleshooting)：Agent 回答错误时，如何快速定位根因？
+
+### 可靠性
+
+- [超时与重试](/docs/agent-engineering/reliability/timeout-retry)：为什么给每层都加三次重试反而可能更不可靠？
+- [幂等与去重](/docs/agent-engineering/reliability/idempotency-deduplication)：幂等与请求去重有什么区别？
+- [循环与失控检测](/docs/agent-engineering/reliability/loop-runaway-detection)：怎样区分正常多步探索与失控循环？
+- [降级与人工接管](/docs/agent-engineering/reliability/fallback-human-takeover)：降级与人工接管怎样避免“看起来成功，实际没完成”？
+
+### 安全与治理
+
+- [权限边界](/docs/agent-engineering/security-governance/permission-boundaries)：如何让模型错误不会直接变成越权操作？
+- [Prompt Injection](/docs/agent-engineering/security-governance/prompt-injection)：Prompt Injection 为什么不是简单过滤几个关键词？
+- [数据与隐私](/docs/agent-engineering/security-governance/data-privacy)：Agent 数据隐私应该覆盖哪些生命周期？
+- [输出校验](/docs/agent-engineering/security-governance/output-validation)：为什么模型输出要按使用场景做不同验证？
+
+### 性能与成本
+
+- [模型路由](/docs/agent-engineering/performance-cost/model-routing)：模型路由如何兼顾质量、费用和可用性？
+- [缓存](/docs/agent-engineering/performance-cost/caching)：Agent 系统有哪些缓存，失效规则如何不同？
+- [并发与限流](/docs/agent-engineering/performance-cost/concurrency-rate-limiting)：为什么限制请求数还不够控制模型服务负载？
+- [Token 优化](/docs/agent-engineering/performance-cost/token-optimization)：怎样减少 token 而不损害任务成功率？
+
+### 部署与运维
+
+- [部署架构](/docs/agent-engineering/deployment-operations/deployment-architecture)：Agent 服务部署与普通请求响应服务有何不同？
+- [配置与密钥](/docs/agent-engineering/deployment-operations/configuration-secrets)：配置和密钥如何管理，才能支持安全回滚？
+- [灰度发布](/docs/agent-engineering/deployment-operations/canary-release)：Agent 灰度发布应观察哪些信号？
+- [容量规划](/docs/agent-engineering/deployment-operations/capacity-planning)：如何估算 Agent 系统容量，而不只看入口 QPS？
+
+## 自测与使用边界
+
+能解释成功标准、最危险失败路径、诊断证据和不达标时的处理方式。
+
+阅读后尝试不看答案回答主问题，再用失败场景追问自己的设计。概念说明、设计建议与运行结果应分开记录。
+
+参考来源、快照日期和版权边界见 [参考资料](/docs/references)；统一写作与验收约定见 [使用说明](/docs/guide)。

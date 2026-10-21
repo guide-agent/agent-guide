@@ -1,0 +1,69 @@
+---
+title: GPU 虚拟化
+description: 梳理 GPU 虚拟化、共享与切分的技术边界，以及 Kubernetes 中的接入和验证思路。
+---
+
+GPU 资源管理不仅是“把卡分给容器”，还需要回答：多个工作负载怎样共享设备、显存如何约束、性能能否预测，以及故障会影响哪些租户。
+
+本栏目同时覆盖 GPU 虚拟化及相关共享技术，但不把它们视为同一种机制。Kubernetes 层面的设备声明与分配见 [K8s DRA](/docs/k8s-dra)。
+
+## 第一次接触，从这里开始
+
+先读 [GPU 扫盲：先懂资源，再谈虚拟化](/docs/gpu-virtualization/gpu-basics)。从显存、算力和带宽的区别开始，再认识驱动、CUDA、容器工具链，以及 OOM 和利用率的常见误解，不需要先背产品名。
+
+推荐顺序：**扫盲 → 共享方案比较 → 时间片与 MPS → MIG → vGPU/直通 → HAMi → 性能与隔离验证**。然后看 [DRA 扫盲](/docs/k8s-dra/from-container-to-dra)，把设备内部的共享与 Kubernetes 的分配连接起来。
+
+## 先区分技术层次
+
+| 方式 | 主要关注点 | 需要确认的边界 |
+| --- | --- | --- |
+| 整卡独占或直通 | 将完整设备交给一个工作负载或虚拟机使用。 | 利用率、设备归属及回收方式。 |
+| 时间片共享（Time-slicing） | 让多个工作负载分时使用同一 GPU。 | 共享不等于独立显存配额或硬件隔离。 |
+| MPS | NVIDIA 多进程服务，协调多个进程使用 GPU 执行资源。 | 支持条件、资源约束及故障影响范围，不等同于独立虚拟机。 |
+| MIG | 在支持的 NVIDIA GPU 上划分硬件实例。 | 支持的型号、实例规格、重配置条件及隔离边界。 |
+| vGPU | 向虚拟机等环境提供虚拟 GPU 的产品与技术方案。 | 厂商实现、驱动兼容、许可要求及底层共享方式。 |
+
+这些方式不一定互斥，也不能仅凭名称判断隔离强度。实际能力需要结合 GPU 型号、驱动、运行时和具体实现确认。
+
+## 与 Kubernetes 的关系
+
+可以把问题拆成三层：
+
+1. **设备层**：硬件和驱动决定 GPU 能否切分、如何共享以及隔离能力。
+2. **资源接入层**：Device Plugin 或 DRA 驱动将可用设备能力暴露给 Kubernetes；支持范围取决于具体实现。
+3. **工作负载层**：训练、推理和交互式任务提出资源需求，并通过调度和运行时使用设备。
+
+DRA 解决资源表达与分配问题，不替代底层 GPU 虚拟化。反过来，设备支持共享，也不代表集群已经具备对应的调度、配额和多租户管理能力。
+
+## 如何评估一种方案？
+
+- **兼容性**：明确 GPU 型号、驱动、CUDA、容器运行时或虚拟化平台版本。
+- **资源约束**：区分显存分配上限、计算资源限制和性能保证，不能只看申请到的资源数量。
+- **隔离与故障**：验证越界使用、显存不足、进程异常和设备故障对其他工作负载的影响。
+- **性能与成本**：在相同负载下比较吞吐、尾延迟、显存占用和整体利用率。
+- **运维生命周期**：检查实例创建、重配置、任务退出、节点重启后的回收与恢复。
+
+## 本栏目的内容边界
+
+重点收录共享机制与方案对比、Kubernetes 接入实践、多租户隔离，以及推理和训练场景的性能验证。具体配置和实验结果应记录环境、负载与验证日期，避免把单一硬件或驱动的结论泛化到所有 GPU。
+
+## 专题与面试问答
+
+- [GPU 扫盲：先懂资源，再谈虚拟化](/docs/gpu-virtualization/gpu-basics)
+- [GPU 共享方案比较](/docs/gpu-virtualization/sharing-comparison)
+- [Time-slicing 与 MPS](/docs/gpu-virtualization/time-slicing-mps)
+- [MIG 实例与资源隔离](/docs/gpu-virtualization/mig)
+- [vGPU、直通与虚拟机边界](/docs/gpu-virtualization/vgpu-passthrough)
+- [HAMi 架构与共享边界](/docs/gpu-virtualization/hami)
+- [GPU 性能与隔离验证](/docs/gpu-virtualization/benchmark-isolation)
+
+这些专题提供机制说明与验收思路；集群、硬件兼容和性能结果需要在指定环境另行验证。
+
+## 官方资料入口
+
+- [NVIDIA：Multi-Instance GPU User Guide](https://docs.nvidia.com/datacenter/tesla/mig-user-guide/)
+- [NVIDIA：Multi-Process Service](https://docs.nvidia.com/deploy/mps/)
+- [NVIDIA：GPU Operator GPU Sharing](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-sharing.html)
+- [NVIDIA：Virtual GPU Software Documentation](https://docs.nvidia.com/vgpu/)
+
+本页为概念与内容范围说明，不包含特定硬件环境下的兼容性或性能验证结论。

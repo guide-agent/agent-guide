@@ -7,6 +7,8 @@
     "basics",
     "architecture-development",
     "engineering-practice",
-    "project-ai-coding"
+    "project-ai-coding",
+    "---算力基础设施---",
+    "k8s-gpu"
   ]
 }

@@ -1,4 +1,32 @@
 ---
 title: Grok Build
+description: "Grok Build 的公开源码可以从哪些边界开始读？"
 ---
 
+## 面试题：Grok Build 的公开源码可以从哪些边界开始读？
+
+### 回答框架
+
+本次固定快照的 README 将项目拆成 pager TUI、shell Agent runtime、tools 和 workspace 等 Rust crates，并说明源码由内部单仓定期同步。分析范围包括 README 与 permission_access.rs、retry.rs 的静态阅读，未构建或运行产品。
+
+### 关键机制与取舍
+
+- 从 crates/codegen/xai-grok-tools/src/permission_access.rs 看 ToolInput 到 AccessKind 的分类，理解工具描述之外的执行授权边界。
+- 该文件使用显式只读分类，其他能力映射到命令、编辑或特定工具权限；分类不等于最终批准逻辑全部在此实现。
+- README 指向 SOURCE_REV 与第三方声明，比较版本和复用实现时同时核对上游归属，不凭相似命名断言独创。
+
+### 场景与失败处理
+
+增加一个会写文件的新工具时，不能因为它叫“分析器”就归入只读；应沿输入类型、权限分类、执行器和测试核对真实副作用。
+
+### 常见追问
+
+**看到 retry.rs 默认值就能说所有调用都这样重试吗？** 不能，还要追踪调用方是否覆盖配置、是否使用该工具函数。
+
+**开源快照等于线上版本吗？** 不一定，需对照发布版本和同步提交，本文只描述已取快照。
+
+## 参考资料
+
+- [Grok Build：仓库结构与许可](https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/README.md)
+- [Grok Build：工具权限分类源码](https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/crates/codegen/xai-grok-tools/src/permission_access.rs)
+- [来源快照、使用边界与验证说明](/docs/references)

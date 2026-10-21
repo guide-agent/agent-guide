@@ -1,4 +1,33 @@
 ---
 title: 其他 Coding Agent
+description: "如何横向比较不同 Coding Agent？"
 ---
 
+## 面试题：如何横向比较不同 Coding Agent？
+
+### 回答框架
+
+比较同一任务下的可验证结果，而不只比较模型名称或功能列表。终端、IDE 和托管 Agent 的运行环境不同，文件访问、网络、会话恢复与人工审批也不同。用相同仓库快照与验收标准才能减少环境偏差。
+
+### 关键机制与取舍
+
+- 设置修 bug、跨文件改接口、补测试和失败恢复任务，记录允许工具与人工干预。
+- 检查工作区保护、命令执行、权限、证据记录和长任务恢复能力。
+- 统计任务成功、总费用、完成时间和维护性，公开榜单只作候选参考。
+
+### 场景与失败处理
+
+工具 A 自动修复且运行全部测试，工具 B 只输出建议代码。应按交付形态分组比较，不能把对话响应时间当完整任务耗时。
+
+### 常见追问
+
+**同一模型不同工具表现为何不同？** 上下文、检索、工具契约和执行环境会显著改变效果。
+
+**如何避免挑选有利题目？** 预先冻结任务集与评分规则，保留失败记录和重复运行结果。
+
+## 参考资料
+
+- [Grok Build：仓库结构与许可](https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/README.md)
+- [OpenAI：Codex 权限与沙箱](https://developers.openai.com/codex/agent-approvals-security/)
+- [Claude Code：官方产品文档](https://code.claude.com/docs/en/overview)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -1,4 +1,33 @@
 ---
 title: Agent Runtime 与 Harness
+description: "模型之外的 Runtime 与 Harness 承担什么职责？"
 ---
 
+## 面试题：模型之外的 Runtime 与 Harness 承担什么职责？
+
+### 回答框架
+
+模型生成候选决策；Runtime 承担实际运行与资源管理，Harness 通常指围绕模型组织上下文、工具、验证和约束的执行环境。不同项目用词略有差异，面试应描述具体职责，而不是争论标签。模型能力与系统可用性不能混为一谈。
+
+### 关键机制与取舍
+
+- 工具调度、超时取消、沙箱、审批和预算在宿主控制层落实，不能仅靠提示词承诺。
+- 持久化任务状态、动作结果及产物引用，使进程重启和人工恢复有依据。
+- 将模型与工具适配隔离，以相同任务集比较不同模型或运行时，避免同时改变多个变量。
+
+### 场景与失败处理
+
+模型正确生成补丁，但路径越界或工作区已被他人修改。Harness 应检查允许路径和文件基线，拒绝不安全应用并请求重新生成。
+
+### 常见追问
+
+**更强模型能替代 Harness 吗？** 不能，操作系统权限、任务恢复和外部副作用仍由程序承担。
+
+**如何评估 Harness？** 固定模型与任务，注入工具故障、取消和恢复场景，比较成功率、风险与成本。
+
+## 参考资料
+
+- [Codex：补丁工具处理器源码](https://github.com/openai/codex/blob/c7234c1174b27d9c55199fba0d546dc27d1b0415/codex-rs/core/src/tools/handlers/apply_patch.rs)
+- [Grok Build：仓库结构与许可](https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/README.md)
+- [Agent 面试题：工程化实践](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/08-工程化实践.md)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -32,3 +32,23 @@ description: Agent 架构、工作流编排、状态管理、工具与协议高�
 回答重点不是背诵协议，而是区分交互边界：MCP 连接模型应用与上下文、资源及工具；A2A 面向 Agent 之间的任务协作；AG-UI 面向 Agent 与前端之间的事件和状态同步。选型时应结合通信对象、生命周期与互操作要求。
 
 延伸阅读：[MCP](/docs/agent-development/protocols-integration/mcp)、[A2A](/docs/agent-development/protocols-integration/a2a)和 [AG-UI](/docs/agent-development/protocols-integration/ag-ui)。
+
+## 6. Checkpoint 是否保证外部副作用只发生一次？
+
+不能。外部写入成功与保存检查点之间存在崩溃窗口；恢复可能重执行节点。需要业务幂等键、结果查询和适当的事务或补偿设计。框架恢复粒度必须按版本与实际节点边界核对。
+
+延伸阅读：[检查点](/docs/agent-development/workflow-state/checkpoint)。
+
+## 7. 并行、Supervisor 与 Handoff 如何区分？
+
+并行让多个独立任务同时执行；Supervisor 持续负责分配和验收；Handoff 转移处理责任或控制权。可组合，但必须明确状态归属、结果合并和停止条件，不能只给角色起名字。
+
+延伸阅读：[编排主控](/docs/agent-architecture/orchestration-collaboration-patterns/supervisor)。
+
+## 8. 人工批准如何防止被复用于另一笔操作？
+
+审批绑定具体对象、参数摘要、身份、版本和有效期。恢复后重新核对，参数变化或权限撤销则审批失效。审批记录与真实执行分别去重，重复点击不能重复产生副作用。
+
+延伸阅读：[可恢复审批](/docs/agent-development/runtime-environment/human-in-the-loop)。
+
+参考源、固定提交和验证边界见 [参考资料](/docs/references)。

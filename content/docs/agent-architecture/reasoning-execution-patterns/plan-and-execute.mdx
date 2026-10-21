@@ -1,4 +1,37 @@
 ---
 title: Plan-and-Execute
+description: "Plan-and-Execute 怎样避免计划与实际脱节？"
 ---
 
+## 面试题：Plan-and-Execute 怎样避免计划与实际脱节？
+
+### 30 秒回答
+
+Plan-and-Execute 就是先列可验收的步骤，再逐步执行并更新进度。它适合任务较长、依赖较多的情况。计划不是死命令：工具失败或条件改变时，要保留已完成结果，只调整受影响的后续步骤。
+
+### 用一个例子理解
+
+调研三个产品时，可以先确定比较维度，再查各自资料，最后整理差异。如果其中一个产品没有公开价格，应标记未知或询价，而不是为了填满计划表编一个数字。
+
+### 关键机制与取舍
+
+- 计划节点包含目标、依赖、输入、产物和验收条件，不把“研究一下”当可执行动作。
+- 区分计划版本与执行记录，重规划保留已完成事实，不能重放已发生的外部副作用。
+- 确定重规划触发条件：前提失效、工具能力缺失或验收失败；限制全局重规划次数。
+
+### 场景与失败处理
+
+生成报告需要先取数据，数据源不可用时，计划应明确缩减范围或等待，而不是让执行器凭空补数完成节点。
+
+### 常见追问
+
+**为什么不每一步都重新规划？** 会增加延迟并造成目标漂移；只有相关前提改变才需要调整。
+
+**计划完成就代表任务完成吗？** 不，最终还要按原始用户验收标准检查整体产物。
+
+## 参考资料
+
+- [Hello Agents：经典范式学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter4/%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E6%99%BA%E8%83%BD%E4%BD%93%E7%BB%8F%E5%85%B8%E8%8C%83%E5%BC%8F%E6%9E%84%E5%BB%BA.md)
+- [Agent 面试题：核心模式](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/02-核心框架.md)
+- [Agent 面试题：多智能体](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/06-多智能体.md)
+- [来源快照、使用边界与验证说明](/docs/references)

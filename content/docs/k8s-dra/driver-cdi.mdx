@@ -1,0 +1,37 @@
+---
+title: "DRA 驱动与 CDI 接入"
+description: "DRA 驱动、设备内核驱动和 CDI 有什么区别？"
+---
+
+## 面试题：DRA 驱动、设备内核驱动和 CDI 有什么区别？
+
+### 30 秒回答
+
+硬件驱动让操作系统能用 GPU；DRA 驱动把设备发现和准备接入 Kubernetes；CDI 描述容器运行时该怎样接入指定设备。可以记成“硬件能用、集群会分、容器能接”，但任何一层都不能替另一层保证隔离。
+
+### 用一个例子理解
+
+宿主机能列出 GPU，只证明底层某些环节正常。容器仍可能因设备描述、驱动库或访问权限不匹配而启动失败。CDI 像一份设备接入说明，不是显存限额器，也不是把 GPU 切成多份的工具。
+
+### 关键机制与取舍
+
+- 发现层发布稳定设备标识、属性和健康信息，避免驱动重启后设备身份漂移。
+- 准备层核对已分配设备并生成运行时需要的信息，重复准备应避免重复创建或泄露资源。
+- CDI 描述与运行时支持要匹配，容器看见设备节点也不等于驱动库、权限和计算能力全部正常。
+
+### 场景与失败处理
+
+节点能列出 GPU，Pod 中却无法加载库。分别检查内核驱动、用户态库注入和容器运行时配置，不能只重启 DRA 控制面组件。
+
+### 常见追问
+
+**DRA 驱动会自动创建硬件分区吗？** 取决于实现；本次 ROCm 排障文档明确其发现预先创建分区，不动态创建或修改分区。
+
+**CDI 能提供显存隔离吗？** CDI 主要规范设备接入，隔离能力来自硬件、驱动或具体共享实现。
+
+## 参考资料
+
+- [AMD GPU DRA 排障与已知限制](https://github.com/ROCm/k8s-gpu-dra-driver/blob/0ac3a6e01623fbdc4f74a87d60616fbcc1c0fa30/docs/troubleshooting.md)
+- [NVIDIA Device Plugin：设备暴露与共享](https://github.com/NVIDIA/k8s-device-plugin/blob/1053da35d5a67fdbc3f0ea0877b7178026048769/README.md)
+- [Kubernetes：DRA 官方概念](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/)
+- [来源快照、使用边界与验证说明](/docs/references)

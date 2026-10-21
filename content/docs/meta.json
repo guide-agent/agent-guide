@@ -1,12 +1,17 @@
 {
   "title": "Agent 面试指南",
   "pages": [
+    "index",
+    "guide",
+    "references",
     "agent-general",
     "agent-architecture",
     "agent-development",
     "agent-engineering",
     "project-practice",
     "ai-coding",
+    "k8s-dra",
+    "gpu-virtualization",
     "interview-questions"
   ]
 }

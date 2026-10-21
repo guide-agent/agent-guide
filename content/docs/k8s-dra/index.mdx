@@ -1,0 +1,68 @@
+---
+title: K8s DRA
+description: 理解 Kubernetes 动态资源分配的核心对象、设备分配流程及 GPU 接入边界。
+---
+
+Kubernetes Dynamic Resource Allocation（DRA，动态资源分配）用于表达工作负载对设备的需求，并协调设备发现、分配和使用。GPU 是典型场景，但 DRA 并不只面向 GPU。
+
+本栏目关注 **Kubernetes 如何管理和分配设备**。设备如何切分、共享，以及不同共享方式的隔离能力，放在 [GPU 虚拟化](/docs/gpu-virtualization) 栏目讨论。
+
+## 第一次接触，从这里开始
+
+先读 [DRA 扫盲：从容器使用 GPU 讲起](/docs/k8s-dra/from-container-to-dra)。它先说明驱动、容器、Device Plugin 和 DRA 分别负责什么，再解释四个资源对象，最后讨论它们为什么不能代替 GPU 隔离和作业排队。
+
+推荐顺序：**扫盲 → 核心对象 → Device Plugin 对比 → 分配生命周期 → CDI → 共享边界 → 排障**。对硬件还不熟悉，可以先看 [GPU 扫盲](/docs/gpu-virtualization/gpu-basics)。
+
+## DRA 解决什么问题？
+
+使用设备时，工作负载可能不仅关心数量，还需要根据设备属性、容量和约束选择资源。DRA 通过独立的资源声明和设备信息，让这些需求参与设备分配与 Pod 调度。
+
+DRA 不是 GPU 驱动，也不会自动把物理 GPU 切成多个隔离实例。实际可用的设备能力取决于硬件、厂商驱动及 DRA 驱动实现。
+
+## 核心对象
+
+| 对象 | 作用 |
+| --- | --- |
+| `DeviceClass` | 定义可供申请的一类设备及其选择条件。 |
+| `ResourceSlice` | 由驱动发布设备信息，供资源分配和调度使用。 |
+| `ResourceClaim` | 描述工作负载的设备需求，并承载分配结果。 |
+| `ResourceClaimTemplate` | 为 Pod 所需的资源声明提供模板。 |
+| DRA 驱动 | 对接具体设备，参与设备信息发布、节点侧准备与清理。 |
+
+## 从设备到工作负载
+
+1. 驱动发布设备信息，管理员配置相应的 `DeviceClass`。
+2. 工作负载通过 `ResourceClaim` 或 `ResourceClaimTemplate` 表达设备需求。
+3. Kubernetes 根据需求和可用设备信息，协调资源分配与 Pod 调度。
+4. 节点侧组件与驱动准备已分配设备，使容器能够使用。
+5. 工作负载结束后，按资源声明的生命周期和驱动实现完成清理与回收。
+
+资源声明和 Pod 不一定具有相同生命周期。排障时，应分别检查设备信息、声明的分配状态、Pod 调度事件，以及节点侧设备准备结果。
+
+## 本栏目的内容边界
+
+- **基础与选型**：DRA 与传统 Device Plugin 的模型差异、适用场景和迁移条件。
+- **资源模型与调度**：设备属性、选择条件、声明生命周期及调度约束。
+- **驱动与运行时**：设备发现、节点准备、容器设备接入与资源回收。
+- **GPU 实践与排障**：设备申请失败、Pod 等待、驱动异常和节点恢复。
+
+涉及具体 YAML、API 字段或特性开关时，需要同时注明 Kubernetes 版本、DRA 驱动版本和硬件环境；不能假设所有版本和驱动支持相同能力。
+
+## 专题与面试问答
+
+- [DRA 扫盲：从容器使用 GPU 讲起](/docs/k8s-dra/from-container-to-dra)
+- [DRA 核心资源对象](/docs/k8s-dra/core-resources)
+- [Device Plugin 与 DRA 对比](/docs/k8s-dra/device-plugin-vs-dra)
+- [设备分配与回收生命周期](/docs/k8s-dra/allocation-lifecycle)
+- [DRA 驱动与 CDI 接入](/docs/k8s-dra/driver-cdi)
+- [调度约束与共享边界](/docs/k8s-dra/scheduling-sharing)
+- [DRA 排障与面试案例](/docs/k8s-dra/troubleshooting)
+
+这些专题提供机制说明与验收思路；集群、硬件兼容和性能结果需要在指定环境另行验证。
+
+## 官方资料
+
+- [Kubernetes：Dynamic Resource Allocation](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/)
+- [Kubernetes：Install Drivers and Allocate Devices with DRA](https://kubernetes.io/docs/tutorials/cluster-management/install-use-dra/)
+
+概念核对日期：2026-10-21。本页为栏目概览，不代表已在实际集群验证部署流程。

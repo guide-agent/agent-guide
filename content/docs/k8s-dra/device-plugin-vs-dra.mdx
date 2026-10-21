@@ -1,0 +1,36 @@
+---
+title: "Device Plugin 与 DRA 对比"
+description: "DRA 相比 Device Plugin 解决了哪些表达问题？"
+---
+
+## 面试题：DRA 相比 Device Plugin 解决了哪些表达问题？
+
+### 30 秒回答
+
+Device Plugin 常见用法是把设备暴露成可申请的整数资源，Pod 写“要几份”；DRA 进一步用设备属性和独立声明表达“要什么样的设备”。二者都是设备接入方式，不负责凭空增加算力，也不能单靠接口决定隔离强度。
+
+### 用一个例子理解
+
+只要求“一张某类 GPU”，扩展资源可能已足够。若任务还要按驱动公开的属性选择设备、管理声明生命周期，DRA 提供更丰富的表达方式。但旧方案也可通过资源名和节点标签区分设备，不能说它完全无法做分类。
+
+### 关键机制与取舍
+
+- 比较资源数量申请与属性选择、声明复用及生命周期，而不是只比较 YAML 长度。
+- Device Plugin 本身可结合厂商共享方案，DRA 也仍依赖设备驱动实现实际能力。
+- 迁移时防止同一物理设备被两套机制同时作为空闲资源分配，逐节点或资源池规划归属。
+
+### 场景与失败处理
+
+集群已经通过 Device Plugin 提供 MIG 实例，业务只需要固定规格，未必立即迁移 DRA；若需要属性匹配与声明管理，再验证目标驱动能否覆盖现有运维流程。
+
+### 常见追问
+
+**DRA 会让 GPU 自动利用率更高吗？** 不保证，利用率还受负载、共享机制、调度策略和服务配置影响。
+
+**迁移只改 Pod 资源名够吗？** 不够，还涉及驱动、Claim、运行时接入、调度和回收。
+
+## 参考资料
+
+- [Kubernetes：DRA 官方概念](https://kubernetes.io/docs/concepts/resource-management/dynamic-resource-allocation/)
+- [NVIDIA Device Plugin：设备暴露与共享](https://github.com/NVIDIA/k8s-device-plugin/blob/1053da35d5a67fdbc3f0ea0877b7178026048769/README.md)
+- [来源快照、使用边界与验证说明](/docs/references)

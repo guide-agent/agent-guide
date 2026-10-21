@@ -1,4 +1,38 @@
 ---
 title: 上下文工程（Context Engineering）
+description: "上下文工程与提示词工程有什么区别？"
 ---
 
+## 面试题：上下文工程与提示词工程有什么区别？
+
+### 30 秒回答
+
+提示词工程关注“怎么说”，上下文工程还关注“这次让模型看什么”。它要挑选相关历史、证据、工具说明和当前进度，并清理过期或无关信息。目标不是塞得越多越好，而是让下一步判断有足够、可信的依据。
+
+### 用一个例子理解
+
+处理“刚才那笔订单退了吗”，只告诉模型退款规则还不够，还要提供“刚才那笔”对应的订单号和真实退款状态。用户上周聊的旅游计划不必带入；别人的订单信息即使相似，也不应进入上下文。
+
+### 关键机制与取舍
+
+- 指令、用户要求、工具观察和外部资料分层标记，外部文档不能因被检索进来就变成高权限指令。
+- 持久状态保存精确事实与进度，摘要只帮助导航；关键结论能回溯到原始文件或调用结果。
+- 按相关性、新鲜度和预算筛选材料，压缩后验证任务约束、未决问题和证据标识是否保留。
+
+### 场景与失败处理
+
+检索命中了另一客户的合同。即使内容高度相关，也必须在召回阶段或读取前按租户权限过滤，不能指望生成阶段自行隐藏。
+
+### 常见追问
+
+**摘要越短越好吗？** 不是；应保留影响下一步决策的约束与未完成事项，长度只是成本指标。
+
+**工具定义算上下文吗？** 通常算，它们影响选择与参数生成，也需要精简、分组和按需发现。
+
+## 参考资料
+
+- [Hello Agents：记忆与检索学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter8/%E7%AC%AC%E5%85%AB%E7%AB%A0%20%E8%AE%B0%E5%BF%86%E4%B8%8E%E6%A3%80%E7%B4%A2.md)
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [Agent 面试题：记忆系统](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/05-记忆系统.md)
+- [Agent 面试题：提示工程](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/09-Prompt工程.md)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -1,0 +1,14 @@
+{
+  "title": "GPU 虚拟化",
+  "root": true,
+  "pages": [
+    "index",
+    "gpu-basics",
+    "sharing-comparison",
+    "time-slicing-mps",
+    "mig",
+    "vgpu-passthrough",
+    "hami",
+    "benchmark-isolation"
+  ]
+}

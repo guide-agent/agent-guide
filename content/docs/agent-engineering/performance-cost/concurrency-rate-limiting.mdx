@@ -1,4 +1,37 @@
 ---
 title: 并发与限流
+description: "为什么限制请求数还不够控制模型服务负载？"
 ---
 
+## 面试题：为什么限制请求数还不够控制模型服务负载？
+
+### 30 秒回答
+
+并发限制控制“同时做多少件事”，速率限制控制“一段时间接多少请求或 token”。二者都要有，否则瞬时任务太多会把服务挤满。排队也必须有上限，等得无限久不算可用。
+
+### 用一个例子理解
+
+两个请求都是一次调用，但一个只输出十个字，另一个要读长文并写报告，消耗差很多。所以只限制每秒请求数不够，还应考虑在途任务、token 配额和等待时间，取消后也要回收占用。
+
+### 关键机制与取舍
+
+- 分别观察请求数、token 额度、工具连接池和后台 worker 容量。
+- 设有界队列、等待截止时间与拒绝策略，不能无限接收后让用户一直等待。
+- 重试仍占用预算，限流恢复应避免所有客户端同时重试。
+
+### 场景与失败处理
+
+一个请求拆成几十个检索分支，入口 QPS 很低却压垮下游。应在子任务调度层共享并发额度，按关键性合并或延后非必要分支。
+
+### 常见追问
+
+**增加 worker 就能提高吞吐吗？** 外部配额或数据库成为瓶颈时只会增加排队和失败。
+
+**怎样处理大客户抢占？** 按租户配额、优先级和保留容量制定规则，并给出可见等待状态。
+
+## 参考资料
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [Agent 面试题：工程化实践](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/08-工程化实践.md)
+- [推理优化考点与原始论文入口](https://github.com/MisterBooo/llm-interview-questions/blob/320048c20288c2d3afb695f97a55e91315c60fdf/modules/inference-optimization.md)
+- [来源快照、使用边界与验证说明](/docs/references)

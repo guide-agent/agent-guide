@@ -1,4 +1,33 @@
 ---
 title: Coding Agent
+description: "一个 Coding Agent 的端到端闭环如何验收？"
 ---
 
+## 面试题：一个 Coding Agent 的端到端闭环如何验收？
+
+### 回答框架
+
+闭环应从需求与仓库现状出发，经检索、计划、最小补丁、测试和差异审查，最终交付可核查变更与剩余风险。模型输出代码不是完成；补丁必须真正应用并经过相应验证。本页提供设计与验收框架，不宣称已有可运行产品。
+
+### 关键机制与取舍
+
+- 只在授权工作区操作，先识别用户已有改动与项目指令，再分配修改范围。
+- 补丁绑定文件基线，工具记录退出码、测试结果和失败证据，不能把“应该通过”写成“已通过”。
+- 使用隔离环境控制命令、依赖与网络，提交、推送和部署有独立授权边界。
+
+### 场景与失败处理
+
+修复函数后单测通过，但调用方仍使用旧参数。应检查引用与契约并跑受影响集成测试，不能只把新增测试通过作为充分证明。
+
+### 常见追问
+
+**如何构造评测集？** 固定仓库提交、任务说明、允许改动和隐藏验收测试，并核对没有偷改测试标准。
+
+**评估只看测试通过吗？** 还要检查补丁相关性、维护性、安全和是否破坏用户已有工作。
+
+## 参考资料
+
+- [Codex：补丁工具处理器源码](https://github.com/openai/codex/blob/c7234c1174b27d9c55199fba0d546dc27d1b0415/codex-rs/core/src/tools/handlers/apply_patch.rs)
+- [OpenAI：Codex 权限与沙箱](https://developers.openai.com/codex/agent-approvals-security/)
+- [Agent 面试题：工程化实践](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/08-工程化实践.md)
+- [来源快照、使用边界与验证说明](/docs/references)

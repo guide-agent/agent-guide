@@ -1,4 +1,38 @@
 ---
 title: 上下文窗口
+description: "上下文窗口变大，为什么回答不一定更准确？"
 ---
 
+## 面试题：上下文窗口变大，为什么回答不一定更准确？
+
+### 30 秒回答
+
+上下文窗口是模型一次调用能处理的 token 范围，不是永久记忆。指令、历史、资料和输出预算都需要考虑。放得下不等于用得好：材料太多、冲突或不相关，仍会让模型漏掉重点。
+
+### 用一个例子理解
+
+请同事审合同，不会把所有部门十年的文件都堆在桌上；会优先给这份合同、当前政策和要核对的问题。给模型也是一样。精简时不能只留一段笼统摘要，还要保留影响判断的日期、金额、限制和原文出处。
+
+### 关键机制与取舍
+
+- 分别预算指令、工具定义、检索证据、近期对话及输出预留；供应商对输入输出上限的计法需单独确认。
+- 稳定事实与任务状态外置保存；把当前需要的内容重新组装进模型输入，不能把摘要当原始证据。
+- 评测关键事实位于开头、中间、末尾以及相互矛盾时的表现，同时测首 token 延迟和费用。
+
+### 场景与失败处理
+
+长会话把“不能发送邮件”压缩掉，Agent 随后要求发信。修复不是单纯扩大窗口，而是把授权约束保存在结构化状态中，并在执行器重新校验。
+
+### 常见追问
+
+**截断最旧消息安全吗？** 可能割裂工具调用与返回、丢失承诺；应按完整交互单元压缩并保留关键事实来源。
+
+**窗口与长期记忆有什么区别？** 窗口是当次可见信息，长期记忆是跨任务存储、更新和检索机制。
+
+## 参考资料
+
+- [AI Engineering 面试考点索引（部分答案为外链）](https://github.com/amitshekhariitbhu/ai-engineering-interview-questions/blob/e0783e2ebc3ef6160f089e9dd4a7d6e9d808d37f/README.md)
+- [Hello Agents：记忆与检索学习入口](https://github.com/datawhalechina/hello-agents/blob/36f583c233ea5cee4537ef93455702b55053af18/docs/chapter8/%E7%AC%AC%E5%85%AB%E7%AB%A0%20%E8%AE%B0%E5%BF%86%E4%B8%8E%E6%A3%80%E7%B4%A2.md)
+- [Agent 面试题：记忆系统](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/05-记忆系统.md)
+- [Agent 面试题：提示工程](https://github.com/bcefghj/ai-agent-interview-guide/blob/9a987322f2d82ddabe4c1aabc7b4795749fa90a2/docs/01-面试八股文/09-Prompt工程.md)
+- [来源快照、使用边界与验证说明](/docs/references)

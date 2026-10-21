@@ -1,0 +1,138 @@
+{
+  "retrieved_at": "2026-10-21",
+  "purpose": "将站点原有远程插图原样本地化，避免 MDX 编译与浏览器加载依赖 GitHub；不改变原有版权与许可。",
+  "images": [
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/4.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/4.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/4.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/4.png",
+      "sha256": "77c5d00c56436ed30e834ae6c288e948b6b411cf901b1ff09bcd51b7acb2c4ba",
+      "bytes": 50718,
+      "width": 892,
+      "height": 514
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/1.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/1.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/1.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/1.png",
+      "sha256": "031b54ce8d0b7c5a5dc163da7321b36b601326d87e0ca2e12e63de15470630e2",
+      "bytes": 16028,
+      "width": 878,
+      "height": 514
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/8.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/8.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/8.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/8.png",
+      "sha256": "17042235b795c1c2dbef3ccedc6e929aa5ec725851589b9c55752470b20e1818",
+      "bytes": 39151,
+      "width": 609,
+      "height": 482
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/2.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/2.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/2.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/2.png",
+      "sha256": "34c1cbf4f79c67e6cb72a1d2415f6375defb4663f008612928cfcc80cf87d103",
+      "bytes": 23551,
+      "width": 681,
+      "height": 302
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/6.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/6.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/6.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/6.png",
+      "sha256": "ae195ccebe7f89f5482cd5d4dbf6df851bdd596847072cb72c64fc4ab431448e",
+      "bytes": 28135,
+      "width": 497,
+      "height": 497
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/3.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/3.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/3.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/3.png",
+      "sha256": "8b7d941150fb90924297485636bb4648a3561036be9a79c394af5654f47b7e9d",
+      "bytes": 50329,
+      "width": 1660,
+      "height": 686
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/model-tokenization/token-tokenizer.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/model-tokenization/5.png",
+      "asset": "public/images/docs/agent-general/llm-basics/model-tokenization/5.png",
+      "src": "/images/docs/agent-general/llm-basics/model-tokenization/5.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/model-tokenization/5.png",
+      "sha256": "cb16abb659ad1b7aa3b2719478d50ce712ddc315b6f78fd0b1c3a66836cab625",
+      "bytes": 24502,
+      "width": 1570,
+      "height": 730
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/knowledge-retrieval/rag.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/knowledge-retrieval/rag/data-loader.png",
+      "asset": "public/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/data-loader.png",
+      "src": "/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/data-loader.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/knowledge-retrieval/rag/data-loader.png",
+      "sha256": "eb0f0901cf90b2596c954efb538050e59e4cc01e051c9bf180789cb42d9a9898",
+      "bytes": 93198,
+      "width": 1080,
+      "height": 434
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/knowledge-retrieval/rag.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/knowledge-retrieval/rag/1.png",
+      "asset": "public/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/1.png",
+      "src": "/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/1.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/knowledge-retrieval/rag/1.png",
+      "sha256": "6386d1e4a9e2e3fdc3d3075612140423f53060e06c1de366be84fe6c009fbceb",
+      "bytes": 205192,
+      "width": 2126,
+      "height": 676
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/knowledge-retrieval/rag.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/knowledge-retrieval/rag/vector.png",
+      "asset": "public/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/vector.png",
+      "src": "/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/vector.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/knowledge-retrieval/rag/vector.png",
+      "sha256": "99e7b32c71632dbf2c04694e15c2d4e30af491243ebee449624709734f387989",
+      "bytes": 18836,
+      "width": 668,
+      "height": 498
+    },
+    {
+      "document": "content/docs/agent-general/llm-basics/knowledge-retrieval/rag.mdx",
+      "original_url": "https://raw.githubusercontent.com/guide-agent/images/main/agent-general/llm-basics/knowledge-retrieval/rag/retrieval.png",
+      "asset": "public/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/retrieval.png",
+      "src": "/images/docs/agent-general/llm-basics/knowledge-retrieval/rag/retrieval.png",
+      "source_commit": "db4d13cbf855221fe43fd7cc1ed85bd3345898be",
+      "source_url": "https://raw.githubusercontent.com/guide-agent/images/db4d13cbf855221fe43fd7cc1ed85bd3345898be/agent-general/llm-basics/knowledge-retrieval/rag/retrieval.png",
+      "sha256": "06bd64ca3e15c73c0d5c6c6f7b0382e74b1d624b4e7da5d29fe08b3c34ef25a9",
+      "bytes": 157533,
+      "width": 1490,
+      "height": 598
+    }
+  ]
+}

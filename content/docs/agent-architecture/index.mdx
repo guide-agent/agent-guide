@@ -1,3 +1,42 @@
 ---
 title: Agent 架构与模式
+description: "从控制流归属出发理解 Agent 架构：先比较固定工作流与自治循环，再学习推理、执行和协作模式。"
 ---
+
+从控制流归属出发理解 Agent 架构：先比较固定工作流与自治循环，再学习推理、执行和协作模式。架构的价值在于清晰的责任、状态和失败边界，而不是角色数量。
+
+## 推荐学习路径
+
+先掌握单 Agent 的工具、状态和终止机制，再用同一任务比较 ReAct、显式计划和多 Agent。
+
+## 专题导航
+
+### Agent 架构
+
+- [Workflow 与 Agent](/docs/agent-architecture/agent-architecture/workflow-vs-agent)：哪些步骤交给工作流，哪些交给 Agent？
+- [单 Agent 架构](/docs/agent-architecture/agent-architecture/single-agent-architecture)：如何设计单 Agent，并判断它是否已经不够用？
+- [多 Agent 架构](/docs/agent-architecture/agent-architecture/multi-agent-architecture)：多 Agent 协作为什么既可能增益，也可能放大错误？
+- [Agent Runtime 与 Harness](/docs/agent-architecture/agent-architecture/runtime-harness)：模型之外的 Runtime 与 Harness 承担什么职责？
+
+### 推理与执行模式
+
+- [ReAct](/docs/agent-architecture/reasoning-execution-patterns/react)：ReAct 的价值是不是要求模型写出长篇推理？
+- [Plan-and-Execute](/docs/agent-architecture/reasoning-execution-patterns/plan-and-execute)：Plan-and-Execute 怎样避免计划与实际脱节？
+- [Reflection](/docs/agent-architecture/reasoning-execution-patterns/reflection)：让模型反思自己的答案，能稳定提高质量吗？
+- [Agent Loop Engineering](/docs/agent-architecture/reasoning-execution-patterns/agent-loop-engineering)：概念上的 Agent Loop 上线前还缺哪些控制？
+
+### 编排与协作模式
+
+- [Router](/docs/agent-architecture/orchestration-collaboration-patterns/router)：Router 应该只看模型给出的意图分类吗？
+- [Parallel](/docs/agent-architecture/orchestration-collaboration-patterns/parallel)：什么任务可以并行，什么任务不应该并行？
+- [Supervisor](/docs/agent-architecture/orchestration-collaboration-patterns/supervisor)：Supervisor 如何分工，才不会变成新的单点瓶颈？
+- [Handoff](/docs/agent-architecture/orchestration-collaboration-patterns/handoff)：Handoff 与把任务当工具调用，有什么区别？
+- [Human-in-the-Loop](/docs/agent-architecture/orchestration-collaboration-patterns/human-in-the-loop)：架构层的人在回路，应在哪些位置介入？
+
+## 自测与使用边界
+
+能解释某种模式解决的瓶颈、增加的协调成本，以及失败时由谁恢复。
+
+阅读后尝试不看答案回答主问题，再用失败场景追问自己的设计。概念说明、设计建议与运行结果应分开记录。
+
+参考来源、快照日期和版权边界见 [参考资料](/docs/references)；统一写作与验收约定见 [使用说明](/docs/guide)。

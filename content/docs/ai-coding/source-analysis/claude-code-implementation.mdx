@@ -1,4 +1,33 @@
 ---
 title: Claude Code（CC）相关实现
+description: "如何研究 Claude Code 相关实现而不冒充读过核心源码？"
 ---
 
+## 面试题：如何研究 Claude Code 相关实现而不冒充读过核心源码？
+
+### 回答框架
+
+本次观察限定在官方公开仓库快照的 README、许可证与 plugins/README.md。它展示了命令、agents、skills、hooks 和 MCP 等扩展入口，但这些材料不能证明核心 Agent Loop、提示和沙箱的完整实现。源码分析必须注明可见范围。
+
+### 关键机制与取舍
+
+- 先确认文件到底是实现、配置、示例还是产品文档，不把插件的多角色流程等同于产品内部架构。
+- 公开插件目录给出扩展组织方式，可沿命令输入、代理职责和 hook 触发点分析协作契约。
+- 所取 LICENSE.md 为保留权利及商业条款说明；公开可读不等于可以任意复制为开源实现。
+
+### 场景与失败处理
+
+代码审查插件描述多个角色并行审查，只能据此讨论该插件工作流，不能推导所有 Claude Code 请求都采用相同多 Agent 架构。
+
+### 常见追问
+
+**没有核心源码还能学到什么？** 可研究公开扩展契约、任务分解和验证流程，并把内部机制留为未确认。
+
+**如何避免版本误读？** 引用固定提交与具体文件，产品行为另外核对当前官方文档。
+
+## 参考资料
+
+- [Claude Code：官方仓库说明](https://github.com/anthropics/claude-code/blob/d014fc0fa64280540728772fc84063918ed185cc/README.md)
+- [Claude Code：公开插件目录](https://github.com/anthropics/claude-code/blob/d014fc0fa64280540728772fc84063918ed185cc/plugins/README.md)
+- [Claude Code：官方产品文档](https://code.claude.com/docs/en/overview)
+- [来源快照、使用边界与验证说明](/docs/references)

@@ -32,3 +32,23 @@ description: Agent 项目表达、系统设计与 AI Coding 高频面试题。
 从差异审查开始，依次执行格式检查、静态分析、相关测试、生产构建和关键路径回归。高风险改动还要检查权限、并发、数据迁移与回滚。验证结果必须和原始验收标准对应。
 
 延伸阅读：[计划、编码与测试循环](/docs/ai-coding/ai-coding-methodology/plan-code-test-loop)和 [测试与验证](/docs/ai-coding/coding-agent-principles/testing-validation)。
+
+## 6. 如何证明 Coding Agent 真正运行了验证？
+
+给出实际命令、退出状态、关键结果与覆盖范围，区分启动进程和命令完成。构建、静态检查和业务测试是不同层次；网络阻塞等未完成项明确说明，不能用“应该通过”代替证据。
+
+延伸阅读：[测试与验证](/docs/ai-coding/coding-agent-principles/testing-validation)。
+
+## 7. 公开产品仓库可以直接当完整源码分析吗？
+
+不能。先确认其中是核心实现、插件、示例还是反馈入口，并引用固定提交。Claude Code 的公开插件材料不能证明完整运行时机制；源码中的局部默认值也不能泛化到所有调用方。
+
+延伸阅读：[Claude Code 公开实现边界](/docs/ai-coding/source-analysis/claude-code-implementation)。
+
+## 8. 只有练习项目，没有生产指标应该怎么讲？
+
+标明练习性质与参考来源，说明本人完成的接口、测试、故障处理和可复现结果。没有实测的规模与收益不填数字，可以给出明确实验计划，不能使用教程模板业绩。
+
+延伸阅读：[简历表达](/docs/project-practice/interview-project-communication/resume-presentation)。
+
+参考源、固定提交和验证边界见 [参考资料](/docs/references)。

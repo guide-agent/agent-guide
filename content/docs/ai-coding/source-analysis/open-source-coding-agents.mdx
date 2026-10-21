@@ -1,4 +1,33 @@
 ---
 title: 典型开源 Coding Agent
+description: "阅读开源 Coding Agent 时，如何沿一条真实调用链分析？"
 ---
 
+## 面试题：阅读开源 Coding Agent 时，如何沿一条真实调用链分析？
+
+### 回答框架
+
+选择一个可复核动作，例如应用补丁，从工具暴露、请求解析、权限检查、实际执行到结果记录逐层追踪。本次 Codex 快照中 tools/router.rs 与 tools/handlers/apply_patch.rs 是具体入口；仅凭目录名不能推断所有运行模式。
+
+### 关键机制与取舍
+
+- router.rs 定义工具暴露与路由相关结构；读取时区分模型可见工具、注册工具和执行权限。
+- apply_patch.rs 引用沙箱路由、工具编排和差异跟踪等组件，说明补丁处理不是简单字符串写文件。
+- 沿被调用实现和测试继续确认失败路径；静态阅读结论与真实运行验证分开记录。
+
+### 场景与失败处理
+
+发现补丁处理器调用权限组件，不足以证明所有路径都绝对安全。还需要追踪异常分支、路径解析、工作区变化和相关测试，本次不作全面安全审计结论。
+
+### 常见追问
+
+**怎样比较两个开源项目？** 选同一种任务和失败条件比较控制流、状态与权限，不仅比较语言或 Star。
+
+**从源码学到的默认值能直接用吗？** 先核对版本、调用方覆盖与部署条件，不把局部常量泛化为产品保证。
+
+## 参考资料
+
+- [Codex：工具路由源码](https://github.com/openai/codex/blob/c7234c1174b27d9c55199fba0d546dc27d1b0415/codex-rs/core/src/tools/router.rs)
+- [Codex：补丁工具处理器源码](https://github.com/openai/codex/blob/c7234c1174b27d9c55199fba0d546dc27d1b0415/codex-rs/core/src/tools/handlers/apply_patch.rs)
+- [Grok Build：仓库结构与许可](https://github.com/xai-org/grok-build/blob/2bdd1d6a6369de0e8c68132ea4539e9abd9e14a8/README.md)
+- [来源快照、使用边界与验证说明](/docs/references)
