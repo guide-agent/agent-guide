@@ -1,6 +1,7 @@
 import { docs } from 'collections/server';
 import { loader } from 'fumadocs-core/source';
 import { docsContentRoute, docsImageRoute, docsRoute } from './shared';
+import { withBasePath } from './base-path';
 
 // See https://fumadocs.dev/docs/headless/source-api for more info
 export const source = loader({
@@ -23,14 +24,14 @@ export function getPageMarkdownUrl(page: (typeof source)['$inferPage']) {
 
   return {
     segments,
-    url: `${docsContentRoute}/${segments.join('/')}`,
+    url: withBasePath(`${docsContentRoute}/${segments.join('/')}`),
   };
 }
 
 export async function getLLMText(page: (typeof source)['$inferPage']) {
   const processed = await page.data.getText('processed');
 
-  return `# ${page.data.title} (${page.url})
+  return `# ${page.data.title} (${withBasePath(page.url)})
 
 ${processed}`;
 }
